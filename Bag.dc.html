@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Daily Manufactured Goods — Bag</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#141516;text-decoration:none}
+a:hover{color:#6D7072}
+.dmg-pill{border:0;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;height:28px;padding:0 14px;border-radius:999px;background:rgba(20,21,22,0.06);color:#141516;font-size:12px;line-height:1;letter-spacing:0;transition:background .15s}
+.dmg-pill:hover{background:rgba(20,21,22,0.11);color:#141516}
+.dmg-pill[aria-current="page"]{background:rgba(20,21,22,0.11)}
+.dmg-shop{position:relative}
+.dmg-menu{display:none;position:absolute;left:0;top:100%;padding-top:8px;z-index:20}
+.dmg-shop:hover .dmg-menu,.dmg-shop:focus-within .dmg-menu{display:block}
+.dmg-menu-panel{display:flex;flex-direction:column;min-width:160px;padding:8px 6px;border-radius:18px;background:rgba(242,242,242,0.86);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
+.dmg-menu-panel a{padding:8px 14px;font-size:12px;color:#141516;border-radius:14px}
+.dmg-menu-panel a:hover{color:#8A8D8F}
+.dmg-info-item{padding:8px 14px;font-size:12px;color:#141516;border-radius:14px;cursor:default}
+.dmg-info-item:hover{color:#8A8D8F}
+.dmg-menu-panel a[aria-current="page"]{color:#9A9D9F}
+.dmg-add{align-self:flex-start}
+.dmg-alt{opacity:0;transition:opacity .35s ease}
+.dmg-thumb:hover .dmg-alt{opacity:1}
+.dmg-buy{border:0;font-family:inherit;cursor:pointer;width:100%;height:48px;border-radius:999px;background:#141516;color:#FFFFFF;font-size:14px}
+.dmg-buy:hover{background:#3A3C3E}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #FFFFFF">
+<header style="background: transparent; color: #141516; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; position: relative; z-index: 10">
+<div style="max-width: 1440px; margin: 0 auto; padding: 16px 32px; box-sizing: border-box; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; column-gap: 16px">
+<nav aria-label="Main" style="display: flex; justify-content: flex-start; align-items: center; flex-wrap: wrap; gap: 6px">
+<a class="dmg-pill" href="About.dc.html">About</a>
+<div class="dmg-shop">
+<button class="dmg-pill" type="button" aria-haspopup="true">Shop</button>
+<div class="dmg-menu">
+<div class="dmg-menu-panel">
+<a href="ShopAll.dc.html">Shop All</a>
+<a href="Accessories.dc.html">Equipment</a>
+<a href="Wellness.dc.html">Self-Care</a>
+<a href="Apparel.dc.html">Protective Gear</a>
+</div>
+</div>
+</div>
+<div class="dmg-shop">
+<button class="dmg-pill" type="button" aria-haspopup="true">Info</button>
+<div class="dmg-menu">
+<div class="dmg-menu-panel">
+<span class="dmg-info-item">Contact</span>
+<span class="dmg-info-item">Terms</span>
+<span class="dmg-info-item">Shipping</span>
+<span class="dmg-info-item">Refund Policy</span>
+</div>
+</div>
+</div>
+</nav>
+<a href="Main.dc.html" aria-label="Daily Manufactured Goods, home" style="display: block; line-height: 0">
+<img src="assets/bf44164c27f73720cbdfe4d095b452bf.png" alt="Daily Manufactured Goods" style="height: 28px; width: auto; display: block">
+</a>
+<nav aria-label="Account" style="display: flex; justify-content: flex-end; align-items: center; flex-wrap: wrap; gap: 6px">
+<a class="dmg-pill" href="Conditions.dc.html">Conditions</a>
+<a class="dmg-pill" href="Account.dc.html">Account</a>
+<a class="dmg-pill" href="Bag.dc.html" aria-current="page" aria-label="Bag, {{bag}} items">Bag ({{bag}})</a>
+</nav>
+</div>
+</header>
+<main style="max-width: 1440px; margin: 0 auto; padding: 32px 32px 120px; box-sizing: border-box; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #141516; -webkit-font-smoothing: antialiased">
+<p style="margin: 0; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase">Bag</p>
+<sc-if value="{{empty}}" hint-placeholder-val="{{ false }}">
+<div style="margin-top: 80px; display: flex; flex-direction: column; align-items: flex-start; gap: 20px">
+<p style="margin: 0; font-size: 20px">Your bag is empty.</p>
+<a class="dmg-pill" href="ShopAll.dc.html">Shop All</a>
+</div>
+</sc-if>
+<sc-if value="{{hasItems}}" hint-placeholder-val="{{ true }}">
+<div style="margin-top: 40px; display: flex; flex-wrap: wrap; gap: 56px; align-items: flex-start">
+<div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column">
+<sc-for list="{{items}}" as="it" hint-placeholder-count="3">
+<div style="display: grid; grid-template-columns: 112px minmax(0, 1fr) auto; gap: 24px; align-items: start; padding: 24px 0; border-top: 1px solid #E4E5E5">
+<a href="{{it.page}}" style="display: block"><img src="{{it.img}}" alt="{{it.alt}}" style="width: 112px; aspect-ratio: 2 / 3; object-fit: contain; display: block; background: #FFFFFF"></a>
+<div style="display: flex; flex-direction: column; gap: 4px; font-size: 14px; line-height: 1.4">
+<a href="{{it.page}}">{{it.name}}</a>
+<span style="color: #6D7072">{{it.meta}}</span>
+<div style="display: flex; align-items: center; gap: 8px; margin-top: 16px">
+<button class="dmg-pill" type="button" aria-label="Decrease quantity" onClick="{{it.dec}}">−</button>
+<span style="min-width: 24px; text-align: center; font-size: 13px; font-variant-numeric: tabular-nums">{{it.qty}}</span>
+<button class="dmg-pill" type="button" aria-label="Increase quantity" onClick="{{it.inc}}">+</button>
+<button type="button" onClick="{{it.remove}}" style="border: 0; background: none; padding: 0 0 0 12px; font-family: inherit; font-size: 12px; color: #6D7072; cursor: pointer; text-decoration: underline">Remove</button>
+</div>
+</div>
+<span style="font-size: 14px">{{it.price}}</span>
+</div>
+</sc-for>
+</div>
+<div style="flex: 1 1 300px; max-width: 380px; display: flex; flex-direction: column; gap: 14px; font-size: 14px; padding-top: 24px; border-top: 1px solid #141516">
+<div style="display: flex; justify-content: space-between"><span>Items</span><span style="font-variant-numeric: tabular-nums">{{count}}</span></div>
+<div style="display: flex; justify-content: space-between"><span>Subtotal</span><span>{{subtotal}}</span></div>
+<div style="display: flex; justify-content: space-between; color: #6D7072"><span>Shipping</span><span>Calculated at checkout</span></div>
+<p style="margin: 0; font-size: 13px; color: #6D7072">Duties and tax included.</p>
+<button class="dmg-buy" type="button" style="margin-top: 16px">Checkout</button>
+</div>
+</div>
+</sc-if>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  readItems() {
+    try { const v = JSON.parse(window.localStorage.getItem('dmg-bag') || '[]'); return Array.isArray(v) ? v : []; } catch (e) { return this._mem || []; }
+  }
+  writeItems(list) {
+    this._mem = list;
+    try { window.localStorage.setItem('dmg-bag', JSON.stringify(list)); } catch (e) {}
+  }
+  readBag() {
+    return this.readItems().reduce((a, x) => a + (x.qty || 0), 0);
+  }
+  addItem(id, size) {
+    const list = this.readItems();
+    const hit = list.find((x) => x.id === id && (x.size || '') === (size || ''));
+    if (hit) hit.qty += 1; else list.push({ id: id, size: size || '', qty: 1 });
+    this.writeItems(list);
+    this.setState({ bag: this.readBag(), items: list });
+  }
+  coordsLabel() {
+    let rid = '';
+    try { rid = window.localStorage.getItem('dmg-resident') || ''; if (!rid) { rid = String(1000 + Math.floor(Math.random() * 9000)); window.localStorage.setItem('dmg-resident', rid); } } catch (e) { rid = '0417'; }
+    const rn = parseInt(rid, 10) || 417;
+    return (20 + (rn * 7919 % 4000) / 100).toFixed(4) + '\u00b0 N, ' + (100 + (rn * 104729 % 4500) / 100).toFixed(4) + '\u00b0 E';
+  }
+  componentDidMount() {
+    this.setState({ bag: this.readBag(), items: this.readItems() });
+    this.setState({ zone: this.readZone() });
+    this._sync = () => this.setState({ bag: this.readBag(), items: this.readItems(), zone: this.readZone() });
+    window.addEventListener('storage', this._sync);
+    window.addEventListener('focus', this._sync);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('storage', this._sync);
+    window.removeEventListener('focus', this._sync);
+  }
+  catalog() {
+    return [
+      { id: 'can', page: 'Product-can.dc.html', cat: 'Self-Care', href: 'Wellness.dc.html', name: 'No. 01 Rehydration Formula \u2014 12 Pack', short: 'No. 01 Rehydration Formula', img: 'assets/1fd6a90417709ea661c9d93e1f47e62d.jpg', alt: 'No. 01 Rehydration Formula, white aluminium can', hover: 'assets/c6383f38bac3ae0af2ed79bf9b9dfd78.jpg', hoverAlt: 'No. 01 Rehydration Formula, back of can with nutrition facts', w: { uv: 0.9, air: 0.2, rain: 0 } },
+      { id: 'rain', page: 'Product-rain.dc.html', cat: 'Protective Gear', href: 'Apparel.dc.html', name: 'Technical Rain Jacket', short: 'Technical Rain Jacket', img: 'assets/d86cc1d2c0ffe3f9b2fd836a063f0f6d.jpg', alt: 'Technical Rain Jacket, front view on model', hover: 'assets/6c6cb0e328ca92311d7e666606e3720d.jpg', hoverAlt: 'Technical Rain Jacket, back view on model', w: { uv: 0, air: 0.1, rain: 1 } },
+      { id: 'hazmat', page: 'Product-hazmat.dc.html', cat: 'Protective Gear', href: 'Apparel.dc.html', name: 'Hazmat Suit', short: 'Hazmat Suit', img: 'assets/2f0ba8b8e454ab5f24aa3e0c366c47dc.png', alt: 'Hazmat Suit, front view on model', hover: 'assets/99a3beb5d04b87cfcea729d7b9bc57f4.png', hoverAlt: 'Hazmat Suit, back view on model', w: { uv: 0.2, air: 0.8, rain: 0.6 } },
+      { id: 'fan', page: 'Product-fan.dc.html', cat: 'Protective Gear', href: 'Apparel.dc.html', name: 'Cooling Fan Jacket', short: 'Cooling Fan Jacket', img: 'assets/7aa9652491ac712ac52b349514fe0886.jpg', alt: 'Cooling Fan Jacket, front view on model', hover: 'assets/d63ce7a7341347c4f2d4c2379f6f4732.jpg', hoverAlt: 'Cooling Fan Jacket, back view with printed logo', w: { uv: 0.9, air: 0.1, rain: 0 } },
+      { id: 'vest', page: 'Product-vest.dc.html', cat: 'Protective Gear', href: 'Apparel.dc.html', name: 'Battery Heated Puffer Jacket', short: 'Battery Heated Puffer Jacket', img: 'assets/2f91e4c4f2538401374fa532503c340e.jpg', alt: 'Battery Heated Puffer Jacket, front view on model', hover: 'assets/255995064227e0ed0a583c691867b220.jpg', hoverAlt: 'Battery Heated Puffer Jacket, back view on model', w: { uv: 0, air: 0.2, rain: 0.4 } },
+      { id: 'boot', page: 'Product-boot.dc.html', cat: 'Protective Gear', href: 'Apparel.dc.html', name: 'All-Terrain Boots', short: 'All-Terrain Boots', img: 'assets/154ba0a698e9cb7f8abdaf9f7220cf27.jpg', alt: 'All-Terrain Boots, black, pair front three-quarter view', hover: 'assets/6b8807cd5cbe88f540754fdf308a7bbd.jpg', hoverAlt: 'All-Terrain Boots, black, side view', w: { uv: 0.1, air: 0.1, rain: 0.9 } },
+      { id: 'balm', page: 'Product-balm.dc.html', cat: 'Self-Care', href: 'Wellness.dc.html', name: 'Barrier Balm', short: 'Barrier Balm', img: 'assets/185791f3d855120b583c72895ea65e23.jpg', alt: 'Barrier Balm, round polished silver compact seen from above', hover: 'assets/d1960c7d75f850bf9db5ec8b161c2225.png', hoverAlt: 'Barrier Balm, front three-quarter view with embossed lid', w: { uv: 0.8, air: 0.4, rain: 0.3 } },
+      { id: 'rinse', page: 'Product-rinse.dc.html', cat: 'Self-Care', href: 'Wellness.dc.html', name: 'RINSE/ZERO \u2014 All-in-One Body Wash 400 mL', short: 'RINSE/ZERO', img: 'assets/be21e38702ea75c7a5878e536c4f2555.png', alt: 'RINSE/ZERO all-in-one body wash, frosted translucent bottle with grey label', hover: 'assets/55025e8e1c530932d36b2ee8acc4ae7b.png', hoverAlt: 'RINSE/ZERO, back label with ingredients and barcode', w: { uv: 0.2, air: 0.8, rain: 0.8 } },
+      { id: 'flask', page: 'Product-flask.dc.html', cat: 'Self-Care', href: 'Wellness.dc.html', name: 'Soft Thermal Flask \u2014 500 mL', short: 'Soft Thermal Flask', img: 'assets/dfd30376c0801562ba834291f5fd519d.jpg', alt: 'Soft Thermal Flask, silver soft flask', hover: 'assets/b4b1e59bfdce03c838a5831ed7ee39dd.jpg', hoverAlt: 'Soft Thermal Flask, label side', w: { uv: 0.7, air: 0.1, rain: 0.2 } },
+      { id: 'strip', page: 'Product-strip.dc.html', cat: 'Self-Care', href: 'Wellness.dc.html', name: 'Daily Supplement Strip \u2014 21 Capsules', short: 'Daily Supplement Strip', img: 'assets/1bfd361065ad5a8c1afeeec4406e72d3.jpg', alt: 'Daily Supplement Strip, seven capsules in a silver blister', hover: 'assets/1d55b93438f136db9828e8e4f89ea378.png', hoverAlt: 'Daily Supplement Strip, three strips in an open aluminium tin', w: { uv: 0.4, air: 0.5, rain: 0.3 } },
+      { id: 'perfume', page: 'Product-perfume.dc.html', cat: 'Self-Care', href: 'Wellness.dc.html', name: 'FOREST-01 / AQI 0 \u2014 Eau de Parfum 50 mL', short: 'FOREST-01 / AQI 0', img: 'assets/5e33f31ec654700be91cd3a48200d512.png', alt: 'FOREST-01 / AQI 0 perfume, clear pebble-shaped glass bottle with black cap', hover: 'assets/65e24d0706ac8f1dcb9a473ea8232fbc.png', hoverAlt: 'FOREST-01 / AQI 0 white box packaging, front', w: { uv: 0, air: 0.6, rain: 0.1 } },
+      { id: 'mask', page: 'Product-mask.dc.html', cat: 'Equipment', href: 'Accessories.dc.html', name: 'Gas Mask', short: 'Gas Mask', img: 'assets/044cf0eb50a40a36bf7b382510406339.png', alt: 'Gas Mask, front view on model', hover: 'assets/b978282d49ebb7c90344e23047e49088.jpg', hoverAlt: 'Gas Mask, side profile on model', w: { uv: 0, air: 1, rain: 0.1 } },
+      { id: 'shield', page: 'Product-shield.dc.html', cat: 'Equipment', href: 'Accessories.dc.html', name: 'Solar Shield Sunglass', short: 'Solar Shield Sunglass', img: 'assets/2bc47d4b5e63ee17ab043f0a5726dd5a.jpg', alt: 'Solar Shield Sunglass, front view on model', hover: 'assets/9b6c30711a883acf026551a23e813ca8.jpg', hoverAlt: 'Solar Shield Sunglass, side view on model with embossed temple logo', w: { uv: 1, air: 0.1, rain: 0 } },
+      { id: 'balaclava', page: 'Product-balaclava.dc.html', cat: 'Equipment', href: 'Accessories.dc.html', name: 'Daily Balaclava', short: 'Daily Balaclava', img: 'assets/1932e28de9ce01ca94391f06cc9c6603.jpg', alt: 'Daily Balaclava in black, front view on model', hover: 'assets/cd2adfcb34eccf652ed6cc4c510db33f.jpg', hoverAlt: 'Daily Balaclava in white, front view on model', w: { uv: 0.3, air: 0.9, rain: 0.2 } },
+      { id: 'backpack', page: 'Product-backpack.dc.html', cat: 'Equipment', href: 'Accessories.dc.html', name: 'Survival Backpack', short: 'Survival Backpack', img: 'assets/ba316c46a3308bda6f4ea9df8feebb08.png', alt: 'Survival Backpack, rounded black molded-shell backpack, front view', hover: 'assets/d40cd02eaaf3224e5367d0ead9bf6925.png', hoverAlt: 'Survival Backpack, back view with padded shoulder straps', w: { uv: 0.3, air: 0.4, rain: 0.7 } },
+      { id: 'spacesuit', page: 'Product-spacesuit.dc.html', cat: 'Protective Gear', href: 'Apparel.dc.html', name: 'Space Project 01 Suit', short: 'Space Project 01 Suit', img: 'assets/797035594a1f285858e59c50dc239238.png', alt: 'Space Project 01 Suit, front view on model', hover: 'assets/44e65cb7877e5eb8095b6611c42d780f.jpg', hoverAlt: 'Space Project 01 Suit, back view on model', w: { uv: 0.8, air: 0.8, rain: 0.6 } },
+      { id: 'cargo', page: 'Product-cargo.dc.html', cat: 'Protective Gear', href: 'Apparel.dc.html', name: 'Waist Protect Cargo Pants', short: 'Waist Protect Cargo Pants', img: 'assets/5c4d72d387eb9c1289437e4bc022efc0.jpg', alt: 'Waist Protect Cargo Pants, front view on model', hover: 'assets/fb30454065b70c1c68767acc3d36fa0d.jpg', hoverAlt: 'Waist Protect Cargo Pants, three-quarter view', w: { uv: 0.2, air: 0.3, rain: 0.4 } },
+      { id: 'top', page: 'Product-top.dc.html', cat: 'Protective Gear', href: 'Apparel.dc.html', name: 'Technical Base Layer Top', short: 'Technical Base Layer Top', img: 'assets/93cc1d979a2c3824a15dec47657c5dcf.jpg', alt: 'Technical Base Layer Top, front view on model', hover: 'assets/a685425bc646c9f5a7055fe3af79824c.jpg', hoverAlt: 'Technical Base Layer Top, back view on model', w: { uv: 0.5, air: 0.2, rain: 0.1 } },
+      { id: 'topw', page: 'Product-topw.dc.html', cat: 'Protective Gear', href: 'Apparel.dc.html', name: 'Technical Base Layer Top \u2014 Women\u2019s', short: 'Technical Base Layer Top \u2014 Women\u2019s', img: 'assets/eba5374b093aa30ccf6ecfe2ca7cd64c.jpg', alt: 'Technical Base Layer Top, women\u2019s, front view on model', hover: 'assets/0cfe00fabbc45442193fb8b3add6fd26.jpg', hoverAlt: 'Technical Base Layer Top, women\u2019s, back view on model', w: { uv: 0.5, air: 0.2, rain: 0.1 } }
+    ];
+  }
+  zoneDefs() {
+    return {
+      coastal: { name: 'Coastal Zone', note: 'Acid rain and flooding. Salt in the air.', air: [60, 90], uv: [3, 5], rain: [50, 40] },
+      inland: { name: 'Inland Zone', note: 'Extreme heat and UV. Dry wind.', air: [50, 100], uv: [8, 4], rain: [0, 30] },
+      urban: { name: 'Urban Zone', note: 'Particulate haze. Low visibility.', air: [160, 80], uv: [4, 4], rain: [10, 40] },
+      highland: { name: 'Highland Zone', note: 'Thin air. Sudden temperature shifts.', air: [30, 60], uv: [7, 5], rain: [20, 40] }
+    };
+  }
+  readZone() {
+    try { return window.localStorage.getItem('dmg-zone') || ''; } catch (e) { return (this.state && this.state.zone) || ''; }
+  }
+  writeZone(z) {
+    try { window.localStorage.setItem('dmg-zone', z); } catch (e) {}
+  }
+  conditions(d) {
+    d = d || new Date();
+    const s = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+    let seed = 7;
+    for (let i = 0; i < s.length; i++) seed = (seed * 131 + s.charCodeAt(i)) % 2147483647;
+    const rnd = () => { seed = (seed * 48271) % 2147483647; return seed / 2147483647; };
+    rnd(); rnd(); rnd();
+    const r1 = rnd(), r2 = rnd(), r3 = rnd();
+    const zd = this.zoneDefs()[this.readZone()];
+    const air = zd ? Math.round(zd.air[0] + r1 * zd.air[1]) : Math.round(40 + r1 * 200);
+    const uv = zd ? Math.round(zd.uv[0] + r2 * zd.uv[1]) : Math.round(2 + r2 * 10);
+    const rain = zd ? Math.round((zd.rain[0] + r3 * zd.rain[1]) / 10) * 10 : Math.round(r3 * 9) * 10;
+    const uvLabel = uv >= 11 ? 'Extreme' : uv >= 8 ? 'Very high' : uv >= 6 ? 'High' : uv >= 3 ? 'Moderate' : 'Low';
+    const threat = { uv: uv / 11, air: air / 200, rain: rain / 80 };
+    const worst = Math.max(threat.uv, threat.air, threat.rain);
+    const mins = Math.max(30, Math.round((6 - 4.5 * worst) * 2) * 30);
+    const hours = mins < 60 ? mins + ' min' : (mins / 60) + (mins === 60 ? ' hr' : ' hrs');
+    return { air, uv, rain, uvLabel, threat, hours, mins };
+  }
+  renderVals() {
+    const bag = (this.state && this.state.bag) || 0;
+    const add = () => {};
+    const c = this.conditions();
+    const score = (p) => p.w.uv * c.threat.uv + p.w.air * c.threat.air + p.w.rain * c.threat.rain;
+    const all = this.catalog().map((p) => ({ ...p, score: score(p) })).sort((a, b) => b.score - a.score);
+    const top = all[0];
+    const page = 'Equipment';
+    const catOrder = ['Equipment', 'Self-Care', 'Protective Gear'];
+    const list = page === 'All'
+      ? all.slice().sort((a, b) => (catOrder.indexOf(a.cat) - catOrder.indexOf(b.cat)) || (b.score - a.score))
+      : all.filter((p) => p.cat === page);
+    const products = list.map((p, i) => ({ ...p, price: (({ balaclava: 65, shield: 250, mask: 540, rinse: 24, balm: 36, strip: 53, can: 30, flask: 26, perfume: 146, top: 95, topw: 95, cargo: 320, boot: 450, rain: 680, vest: 720, fan: 740, hazmat: 620, spacesuit: 1530, backpack: 200 })[p.id] !== undefined ? '$' + ({ balaclava: 65, shield: 250, mask: 540, rinse: 24, balm: 36, strip: 53, can: 30, flask: 26, perfume: 146, top: 95, topw: 95, cargo: 320, boot: 450, rain: 680, vest: 720, fan: 740, hazmat: 620, spacesuit: 1530, backpack: 200 })[p.id].toLocaleString('en-US') : '[PRICE]'), today: (page === 'All' ? p.id === top.id : i === 0) && p.score > 0.6, add: () => this.addItem(p.id, '') }));
+    const zone = (this.state && this.state.zone !== undefined) ? this.state.zone : this.readZone();
+    const zdefs = this.zoneDefs();
+    const zones = Object.keys(zdefs).map((k) => ({ name: zdefs[k].name, note: zdefs[k].note, border: k === zone ? '#141516' : '#E4E5E5', pick: () => { this.writeZone(k); this.setState({ zone: k, choosing: false }); } }));
+    const cat = {}; this.catalog().forEach((p) => { cat[p.id] = p; });
+    const raw = (this.state && this.state.items) || this.readItems();
+    const setItems = (list) => { this.writeItems(list); this.setState({ items: list, bag: this.readBag() }); };
+    const PR = { balaclava: 65, shield: 250, mask: 540, rinse: 24, balm: 36, strip: 53, can: 30, flask: 26, perfume: 146, top: 95, topw: 95, cargo: 320, boot: 450, rain: 680, vest: 720, fan: 740, hazmat: 620, spacesuit: 1530, backpack: 200 };
+    const items = raw.filter((x) => cat[x.id]).map((x, i) => {
+      const p = cat[x.id];
+      return {
+        page: p.page, img: p.img, alt: p.alt, name: p.name, qty: x.qty,
+        price: PR[x.id] !== undefined ? '$' + (PR[x.id] * x.qty).toLocaleString('en-US') : '[PRICE]',
+        priced: PR[x.id] !== undefined, amount: (PR[x.id] || 0) * x.qty,
+        meta: (p.cat) + (x.size ? ' \u00b7 Size ' + x.size : ''),
+        inc: () => { const l = this.readItems(); l[i].qty += 1; setItems(l); },
+        dec: () => { const l = this.readItems(); l[i].qty -= 1; setItems(l.filter((y) => y.qty > 0)); },
+        remove: () => { const l = this.readItems(); l.splice(i, 1); setItems(l); }
+      };
+    });
+    return {
+      items: items,
+      count: items.reduce((a, x) => a + x.qty, 0),
+      subtotal: items.every((x) => x.priced) ? '$' + items.reduce((a, x) => a + x.amount, 0).toLocaleString('en-US') : '[PRICE]',
+      empty: items.length === 0,
+      hasItems: items.length > 0,
+      showZone: !zone || !!(this.state && this.state.choosing),
+      hasZone: !!zone,
+      zoneName: zone ? zdefs[zone].name : '',
+      openZone: () => this.setState({ choosing: true }),
+      zones: zones,
+      bag: bag,
+      add: add,
+      c: { zoneLabel: this.coordsLabel() + ' \u2014 ', air: c.air, uv: c.uv, uvLabel: c.uvLabel, rain: c.rain, hours: c.hours, essential: top.short, essentialHref: top.href },
+      products: products
+    };
+  }
+}
+</script>
+</body>
+</html>

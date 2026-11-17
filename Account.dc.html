@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Daily Manufactured Goods — Account</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#141516;text-decoration:none}
+a:hover{color:#6D7072}
+.dmg-pill{border:0;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;height:28px;padding:0 14px;border-radius:999px;background:rgba(20,21,22,0.06);color:#141516;font-size:12px;line-height:1;letter-spacing:0;transition:background .15s}
+.dmg-pill:hover{background:rgba(20,21,22,0.11);color:#141516}
+.dmg-pill[aria-current="page"]{background:rgba(20,21,22,0.11)}
+.dmg-shop{position:relative}
+.dmg-menu{display:none;position:absolute;left:0;top:100%;padding-top:8px;z-index:20}
+.dmg-shop:hover .dmg-menu,.dmg-shop:focus-within .dmg-menu{display:block}
+.dmg-menu-panel{display:flex;flex-direction:column;min-width:160px;padding:8px 6px;border-radius:18px;background:rgba(242,242,242,0.86);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
+.dmg-menu-panel a{padding:8px 14px;font-size:12px;color:#141516;border-radius:14px}
+.dmg-menu-panel a:hover{color:#8A8D8F}
+.dmg-info-item{padding:8px 14px;font-size:12px;color:#141516;border-radius:14px;cursor:default}
+.dmg-info-item:hover{color:#8A8D8F}
+.dmg-menu-panel a[aria-current="page"]{color:#9A9D9F}
+.dmg-add{align-self:flex-start}
+.dmg-alt{opacity:0;transition:opacity .35s ease}
+.dmg-thumb:hover .dmg-alt{opacity:1}
+.dmg-tab{border:0;background:transparent;font-family:inherit;font-size:13px;color:#8A8D8F;text-align:left;padding:7px 0;cursor:pointer;display:flex;align-items:center;gap:10px}
+.dmg-tab:hover{color:#141516}
+.dmg-tab[aria-current="true"]{color:#141516}
+.dmg-tab[aria-current="true"]::before{content:"";width:5px;height:5px;border-radius:50%;background:#141516}
+.dmg-card{border-top:1px solid #141516;padding-top:16px;display:flex;flex-direction:column;gap:8px}
+.dmg-field{display:flex;flex-direction:column;gap:6px}
+.dmg-field input{border:0;border-bottom:1px solid #D9DADA;padding:8px 0;font-family:inherit;font-size:14px;color:#141516;background:transparent;outline:none}
+.dmg-field input:focus{border-bottom-color:#141516}
+.dmg-check{display:flex;align-items:center;gap:10px;font-size:13px;cursor:pointer}
+.dmg-check input{accent-color:#141516;width:14px;height:14px}
+.dmg-acct{display:grid;grid-template-columns:220px minmax(0,1fr);column-gap:72px;row-gap:40px}
+@media (max-width:860px){.dmg-acct{grid-template-columns:1fr}}
+
+.dmg-dw-back{position:fixed;inset:0;z-index:100;background:rgba(255,255,255,0.28);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);animation:dmgFade .3s ease}
+.dmg-dw{position:fixed;top:0;right:0;bottom:0;z-index:101;width:min(480px,100vw);background:#FFFFFF;box-sizing:border-box;padding:28px 28px 24px;display:flex;flex-direction:column;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#141516;-webkit-font-smoothing:antialiased;box-shadow:-24px 0 60px rgba(20,21,22,0.06);animation:dmgSlide .38s cubic-bezier(.2,.7,.2,1)}
+@keyframes dmgSlide{from{transform:translateX(100%)}to{transform:translateX(0)}}
+@keyframes dmgFade{from{opacity:0}to{opacity:1}}
+.dmg-dw-head{display:flex;align-items:center;justify-content:space-between}
+.dmg-dw-head p{margin:0;font-size:13px;letter-spacing:0.08em;text-transform:uppercase}
+.dmg-dw-x{border:0;background:rgba(20,21,22,0.06);width:32px;height:32px;border-radius:999px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#141516;padding:0}
+.dmg-dw-x:hover{background:rgba(20,21,22,0.11)}
+.dmg-dw-list{flex:1 1 auto;overflow-y:auto;margin-top:24px}
+.dmg-dw-item{display:grid;grid-template-columns:84px 1fr auto;gap:16px;padding:16px 0;border-bottom:1px dashed #E4E5E5;align-items:start}
+.dmg-dw-thumb{width:84px;aspect-ratio:4/5;background:#F5F5F5;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.dmg-dw-thumb img{width:100%;height:100%;object-fit:contain;display:block;mix-blend-mode:multiply}
+.dmg-dw-name{margin:4px 0 0;font-size:13px;line-height:1.4}
+.dmg-dw-size{margin:4px 0 0;font-size:12px;color:#6D7072}
+.dmg-dw-right{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.dmg-dw-line{margin:4px 0 0;font-size:12px;color:#6D7072;font-variant-numeric:tabular-nums;white-space:nowrap}
+.dmg-dw-qty{display:flex;align-items:center;gap:4px;background:rgba(20,21,22,0.06);border-radius:999px;padding:3px}
+.dmg-dw-qty button{border:0;background:transparent;width:26px;height:26px;border-radius:999px;cursor:pointer;font-family:inherit;font-size:15px;line-height:1;color:#141516;padding:0}
+.dmg-dw-qty button:hover{background:#FFFFFF}
+.dmg-dw-qty span{min-width:18px;text-align:center;font-size:12px;font-variant-numeric:tabular-nums}
+.dmg-dw-rm{border:0;background:transparent;padding:0;font-family:inherit;font-size:12px;color:#6D7072;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.dmg-dw-rm:hover{color:#141516}
+.dmg-dw-empty{margin:24px 0 0;font-size:13px;color:#6D7072}
+.dmg-dw-foot{border-top:1px solid #141516;padding-top:20px;margin-top:16px;display:flex;flex-direction:column;gap:16px}
+.dmg-dw-sub{margin:0;display:flex;justify-content:space-between;font-size:13px;letter-spacing:0.04em;text-transform:uppercase}
+.dmg-dw-sub span:last-child{font-variant-numeric:tabular-nums;letter-spacing:0}
+.dmg-dw-checkout{display:flex;align-items:center;justify-content:center;height:48px;border-radius:999px;background:#141516;color:#FFFFFF !important;font-size:14px}
+.dmg-dw-checkout:hover{background:#3A3C3E}
+.dmg-dw-note{margin:-4px 0 0;font-size:11px;color:#8A8D8F;text-align:center}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #FFFFFF">
+<header style="background: transparent; color: #141516; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; position: relative; z-index: 10">
+<div style="max-width: 1440px; margin: 0 auto; padding: 16px 32px; box-sizing: border-box; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; column-gap: 16px">
+<nav aria-label="Main" style="display: flex; justify-content: flex-start; align-items: center; flex-wrap: wrap; gap: 6px">
+<a class="dmg-pill" href="About.dc.html">About</a>
+<div class="dmg-shop">
+<button class="dmg-pill" type="button" aria-haspopup="true">Shop</button>
+<div class="dmg-menu">
+<div class="dmg-menu-panel">
+<a href="ShopAll.dc.html">Shop All</a>
+<a href="Accessories.dc.html">Equipment</a>
+<a href="Wellness.dc.html">Self-Care</a>
+<a href="Apparel.dc.html">Protective Gear</a>
+</div>
+</div>
+</div>
+<div class="dmg-shop">
+<button class="dmg-pill" type="button" aria-haspopup="true">Info</button>
+<div class="dmg-menu">
+<div class="dmg-menu-panel">
+<span class="dmg-info-item">Contact</span>
+<span class="dmg-info-item">Terms</span>
+<span class="dmg-info-item">Shipping</span>
+<span class="dmg-info-item">Refund Policy</span>
+</div>
+</div>
+</div>
+</nav>
+<a href="Main.dc.html" aria-label="Daily Manufactured Goods, home" style="display: block; line-height: 0">
+<img src="assets/bf44164c27f73720cbdfe4d095b452bf.png" alt="Daily Manufactured Goods" style="height: 28px; width: auto; display: block">
+</a>
+<nav aria-label="Account" style="display: flex; justify-content: flex-end; align-items: center; flex-wrap: wrap; gap: 6px">
+<a class="dmg-pill" href="Conditions.dc.html">Conditions</a>
+<a class="dmg-pill" href="Account.dc.html" aria-current="page">Account</a>
+<a class="dmg-pill" href="Bag.dc.html" aria-label="Bag, {{bag}} items">Bag ({{bag}})</a>
+</nav>
+</div>
+</header>
+<main style="max-width: 1240px; margin: 0 auto; padding: 48px 32px 120px; box-sizing: border-box; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #141516; -webkit-font-smoothing: antialiased">
+<div class="dmg-acct">
+<aside style="display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; flex-direction: column; gap: 16px">
+<label class="dmg-photo" title="Change profile photo" style="position: relative; display: block; width: 180px; height: 180px; border-radius: 0; background: #ECEDED; cursor: pointer; overflow: hidden">
+<sc-if value="{{hasPhoto}}" hint-placeholder-val="{{ false }}"><img src="{{photo}}" alt="Profile photo" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"></sc-if>
+<sc-if value="{{noPhoto}}" hint-placeholder-val="{{ true }}"><svg viewBox="0 0 180 180" aria-label="Anonymous profile photo" role="img" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block"><circle cx="90" cy="72" r="30" fill="#C4C6C7"/><path d="M28 180c0-36 27.8-62 62-62s62 26 62 62z" fill="#C4C6C7"/></svg></sc-if>
+<input type="file" accept="image/*" onChange="{{pickPhoto}}" aria-label="Upload profile photo" style="position: absolute; inset: 0; opacity: 0; cursor: pointer">
+</label>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<p style="margin: 0; font-size: 18px">{{acct.name}}</p>
+<p style="margin: 0; font-size: 12px; color: #6D7072">Resident No. {{r.id}} · Member since {{acct.since}}</p>
+</div>
+</div>
+<nav aria-label="Account sections" style="display: flex; flex-direction: column; border-top: 1px solid #E4E5E5; padding-top: 12px">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="6"><button class="dmg-tab" type="button" aria-current="{{t.on}}" onClick="{{t.pick}}">{{t.label}}</button></sc-for>
+<button class="dmg-tab" type="button" style="margin-top: 12px">Sign out</button>
+</nav>
+</aside>
+<section style="min-width: 0">
+
+<sc-if value="{{tab.overview}}" hint-placeholder-val="{{ true }}">
+<h1 style="margin: 0; font-size: 28px; font-weight: 400; letter-spacing: -0.01em">Hello, {{acct.first}}</h1>
+<p style="margin: 8px 0 0; font-size: 13px; color: #6D7072">Manage your orders, saved items and details.</p>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; margin-top: 40px">
+<div class="dmg-card"><p style="margin: 0; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #6D7072">Latest order</p><p style="margin: 0; font-size: 15px">{{last.no}}</p><p style="margin: 0; font-size: 13px; color: #6D7072">{{last.status}} · {{last.date}}</p><button class="dmg-pill dmg-add" type="button" onClick="{{goOrders}}" style="margin-top: 8px">View orders</button></div>
+<div class="dmg-card"><p style="margin: 0; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #6D7072">Saved items</p><p style="margin: 0; font-size: 15px">{{wishCount}} items</p><p style="margin: 0; font-size: 13px; color: #6D7072">Ready when conditions change.</p><button class="dmg-pill dmg-add" type="button" onClick="{{goWish}}" style="margin-top: 8px">View wishlist</button></div>
+<div class="dmg-card"><p style="margin: 0; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #6D7072">Default address</p><p style="margin: 0; font-size: 15px">{{addr.line1}}</p><p style="margin: 0; font-size: 13px; color: #6D7072">{{addr.line2}}</p><button class="dmg-pill dmg-add" type="button" onClick="{{goAddr}}" style="margin-top: 8px">Manage addresses</button></div>
+</div>
+<a href="Conditions.dc.html" style="display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 56px; padding: 18px 0; border-top: 1px solid #E4E5E5; border-bottom: 1px solid #E4E5E5">
+<span style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #6D7072">Today's conditions</span><span style="font-size: 14px">{{nowT}}° now · Air {{c.air}} · UV {{c.uv}} · Acid rain {{c.rain}}%</span></span>
+<span style="font-size: 13px">View conditions →</span>
+</a>
+<p style="margin: 56px 0 0; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #6D7072">Recommended for you</p>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); column-gap: 24px; row-gap: 40px; margin-top: 20px">
+<sc-for list="{{replen}}" as="p" hint-placeholder-count="3"><div style="display: flex; flex-direction: column; gap: 12px"><a href="{{p.page}}" style="display: flex; flex-direction: column; gap: 12px"><img src="{{p.img}}" alt="{{p.alt}}" style="width: 100%; aspect-ratio: 2 / 3; object-fit: contain; display: block; background: #FFFFFF"><span style="display: flex; flex-direction: column; gap: 3px; font-size: 13px; line-height: 1.3"><span>{{p.name}}</span><span style="color: #6D7072">{{p.price}}</span></span></a><button class="dmg-pill dmg-add" type="button" onClick="{{p.add}}">Add to bag</button></div></sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{tab.orders}}" hint-placeholder-val="{{ false }}">
+<h1 style="margin: 0; font-size: 28px; font-weight: 400; letter-spacing: -0.01em">Orders</h1>
+<div style="display: flex; flex-direction: column; margin-top: 32px; border-top: 1px solid #141516">
+<sc-for list="{{orders}}" as="o" hint-placeholder-count="3">
+<div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px 24px; align-items: center; padding: 24px 0; border-bottom: 1px solid #E4E5E5">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<p style="margin: 0; font-size: 15px">{{o.no}}</p>
+<p style="margin: 0; font-size: 13px; color: #6D7072">{{o.date}} · {{o.count}} · {{o.total}}</p>
+<p style="margin: 4px 0 0; display: inline-flex; align-items: center; gap: 8px; font-size: 12px"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 50%; background: {{o.dot}}"></span>{{o.status}}</p>
+</div>
+<div style="display: flex; gap: 8px; justify-content: flex-end"><sc-if value="{{o.i1}}" hint-placeholder-val="{{ true }}"><a href="{{o.p1}}"><img src="{{o.i1}}" alt="{{o.a1}}" style="width: 56px; aspect-ratio: 2 / 3; object-fit: contain; display: block; background: #FFFFFF; border: 1px solid #EEEFEF"></a></sc-if><sc-if value="{{o.i2}}" hint-placeholder-val="{{ true }}"><a href="{{o.p2}}"><img src="{{o.i2}}" alt="{{o.a2}}" style="width: 56px; aspect-ratio: 2 / 3; object-fit: contain; display: block; background: #FFFFFF; border: 1px solid #EEEFEF"></a></sc-if><sc-if value="{{o.i3}}" hint-placeholder-val="{{ true }}"><a href="{{o.p3}}"><img src="{{o.i3}}" alt="{{o.a3}}" style="width: 56px; aspect-ratio: 2 / 3; object-fit: contain; display: block; background: #FFFFFF; border: 1px solid #EEEFEF"></a></sc-if></div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{tab.wishlist}}" hint-placeholder-val="{{ false }}">
+<h1 style="margin: 0; font-size: 28px; font-weight: 400; letter-spacing: -0.01em">Wishlist</h1>
+<sc-if value="{{wishEmpty}}" hint-placeholder-val="{{ false }}"><p style="margin: 16px 0 0; font-size: 13px; color: #6D7072">No saved items yet. Tap the heart on any product to save it here.</p></sc-if>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); column-gap: 24px; row-gap: 40px; margin-top: 32px">
+<sc-for list="{{wish}}" as="p" hint-placeholder-count="4"><div style="display: flex; flex-direction: column; gap: 12px"><a href="{{p.page}}" style="display: flex; flex-direction: column; gap: 12px"><img src="{{p.img}}" alt="{{p.alt}}" style="width: 100%; aspect-ratio: 2 / 3; object-fit: contain; display: block; background: #FFFFFF"><span style="display: flex; flex-direction: column; gap: 3px; font-size: 13px; line-height: 1.3"><span>{{p.name}}</span><span style="color: #6D7072">{{p.price}}</span></span></a><div style="display: flex; gap: 6px"><button class="dmg-pill" type="button" onClick="{{p.add}}">Add to bag</button><button class="dmg-pill" type="button" onClick="{{p.remove}}">Remove</button></div></div></sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{tab.addresses}}" hint-placeholder-val="{{ false }}">
+<h1 style="margin: 0; font-size: 28px; font-weight: 400; letter-spacing: -0.01em">Addresses</h1>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 32px; margin-top: 32px">
+<div class="dmg-card"><p style="margin: 0; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #6D7072">Default shipping</p><p style="margin: 0; font-size: 14px; line-height: 1.6">{{acct.name}}<br>{{addr.line1}}<br>{{addr.line2}}<br>{{r.coords}}</p><div style="display: flex; gap: 8px; margin-top: 8px"><button class="dmg-pill" type="button">Edit</button></div></div>
+<div class="dmg-card"><p style="margin: 0; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #6D7072">Emergency shelter</p><p style="margin: 0; font-size: 14px; line-height: 1.6">{{acct.name}}<br>Shelter Block C, Unit 12<br>Sector 7 Distribution Point</p><div style="display: flex; gap: 8px; margin-top: 8px"><button class="dmg-pill" type="button">Edit</button></div></div>
+</div>
+<button class="dmg-pill" type="button" style="margin-top: 32px">Add new address</button>
+</sc-if>
+
+<sc-if value="{{tab.payment}}" hint-placeholder-val="{{ false }}">
+<h1 style="margin: 0; font-size: 28px; font-weight: 400; letter-spacing: -0.01em">Payment methods</h1>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 32px; margin-top: 32px">
+<div class="dmg-card"><p style="margin: 0; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #6D7072">Default</p><p style="margin: 0; font-size: 15px; font-variant-numeric: tabular-nums">Card ending {{r.id}}</p><p style="margin: 0; font-size: 13px; color: #6D7072">Expires 08 / 29</p><div style="display: flex; gap: 8px; margin-top: 8px"><button class="dmg-pill" type="button">Edit</button><button class="dmg-pill" type="button">Remove</button></div></div>
+</div>
+<button class="dmg-pill" type="button" style="margin-top: 32px">Add payment method</button>
+</sc-if>
+
+<sc-if value="{{tab.settings}}" hint-placeholder-val="{{ false }}">
+<h1 style="margin: 0; font-size: 28px; font-weight: 400; letter-spacing: -0.01em">Account details</h1>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 28px 40px; margin-top: 32px; max-width: 640px">
+<label class="dmg-field"><span style="font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #6D7072">First name</span><input type="text" value="{{acct.first}}"></label>
+<label class="dmg-field"><span style="font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #6D7072">Last name</span><input type="text" value="{{acct.last}}"></label>
+<label class="dmg-field"><span style="font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #6D7072">Email</span><input type="email" value="{{acct.email}}"></label>
+<label class="dmg-field"><span style="font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #6D7072">Phone</span><input type="tel" value="{{acct.phone}}"></label>
+</div>
+<p style="margin: 48px 0 0; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #6D7072">Notifications</p>
+<div style="display: flex; flex-direction: column; gap: 14px; margin-top: 16px">
+<label class="dmg-check"><input type="checkbox" checked> Extreme condition alerts for my location</label>
+<label class="dmg-check"><input type="checkbox" checked> Restock and replenishment reminders</label>
+<label class="dmg-check"><input type="checkbox"> New releases and editorial</label>
+</div>
+<div style="display: flex; gap: 8px; margin-top: 40px"><button class="dmg-pill" type="button" style="background: #141516; color: #FFFFFF">Save changes</button><button class="dmg-pill" type="button">Change password</button></div>
+</sc-if>
+
+</section>
+</div>
+</main>
+</div>
+<sc-if value="{{drawerOpen}}" hint-placeholder-val="{{ false }}">
+<div class="dmg-dw-back" onClick="{{closeDrawer}}" aria-hidden="true"></div>
+<aside class="dmg-dw" role="dialog" aria-modal="true" aria-label="My bag">
+<div class="dmg-dw-head"><p>My bag ({{drawerCount}})</p><button class="dmg-dw-x" type="button" onClick="{{closeDrawer}}" aria-label="Close bag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button></div>
+<div class="dmg-dw-list">
+<sc-for list="{{drawerList}}" as="d" hint-placeholder-count="2">
+<div class="dmg-dw-item">
+<a class="dmg-dw-thumb" href="{{d.page}}"><img src="{{d.img}}" alt="{{d.name}}"></a>
+<div><p class="dmg-dw-name">{{d.name}}</p><p class="dmg-dw-size">{{d.size}}</p></div>
+<div class="dmg-dw-right"><p class="dmg-dw-line">{{d.line}}</p><div class="dmg-dw-qty"><button type="button" onClick="{{d.dec}}" aria-label="Decrease quantity">&minus;</button><span>{{d.qty}}</span><button type="button" onClick="{{d.inc}}" aria-label="Increase quantity">+</button></div><button class="dmg-dw-rm" type="button" onClick="{{d.remove}}">Remove</button></div>
+</div>
+</sc-for>
+<sc-if value="{{drawerEmpty}}" hint-placeholder-val="{{ false }}"><p class="dmg-dw-empty">Your bag is empty.</p></sc-if>
+</div>
+<div class="dmg-dw-foot"><p class="dmg-dw-sub"><span>Subtotal</span><span>{{drawerSub}}</span></p><a class="dmg-dw-checkout" href="Bag.dc.html">Proceed to checkout</a><p class="dmg-dw-note">Duties and tax included.</p></div>
+</aside>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  readItems() {
+    try { const v = JSON.parse(window.localStorage.getItem('dmg-bag') || '[]'); return Array.isArray(v) ? v : []; } catch (e) { return this._mem || []; }
+  }
+  writeItems(list) {
+    this._mem = list;
+    try { window.localStorage.setItem('dmg-bag', JSON.stringify(list)); } catch (e) {}
+  }
+  readBag() {
+    return this.readItems().reduce((a, x) => a + (x.qty || 0), 0);
+  }
+  addItem(id, size) {
+    const list = this.readItems();
+    const hit = list.find((x) => x.id === id && (x.size || '') === (size || ''));
+    if (hit) hit.qty += 1; else list.push({ id: id, size: size || '', qty: 1 });
+    this.writeItems(list);
+    this.setState({ bag: this.readBag(), items: list, drawer: true });
+  }
+  readWish() {
+    try { const v = JSON.parse(window.localStorage.getItem('dmg-wish') || 'null'); return Array.isArray(v) ? v : (this._wmem || null); } catch (e) { return this._wmem || null; }
+  }
+  wishList() {
+    const v = this.readWish();
+    return v === null ? ['hazmat', 'backpack', 'perfume', 'vest'] : v;
+  }
+  toggleWish(id) {
+    const l = this.wishList().slice(); const i = l.indexOf(id);
+    if (i >= 0) l.splice(i, 1); else l.unshift(id);
+    this._wmem = l;
+    try { window.localStorage.setItem('dmg-wish', JSON.stringify(l)); } catch (e) {}
+    this.setState({ wish: l });
+  }
+  coordsLabel() {
+    let rid = '';
+    try { rid = window.localStorage.getItem('dmg-resident') || ''; if (!rid) { rid = String(1000 + Math.floor(Math.random() * 9000)); window.localStorage.setItem('dmg-resident', rid); } } catch (e) { rid = '0417'; }
+    const rn = parseInt(rid, 10) || 417;
+    return (20 + (rn * 7919 % 4000) / 100).toFixed(4) + '\u00b0 N, ' + (100 + (rn * 104729 % 4500) / 100).toFixed(4) + '\u00b0 E';
+  }
+  componentDidMount() {
+    this.setState({ bag: this.readBag() });
+    this.setState({ zone: this.readZone() });
+    this._sync = () => this.setState({ bag: this.readBag(), zone: this.readZone(), wish: this.wishList() });
+    window.addEventListener('storage', this._sync);
+    window.addEventListener('focus', this._sync);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('storage', this._sync);
+    window.removeEventListener('focus', this._sync);
+  }
+  readPhoto() {
+    try { return window.localStorage.getItem('dmg-photo-v2') || ''; } catch (e) { return ''; }
+  }
+  catalog() {
+    return [
+      { id: 'can', page: 'Product-can.dc.html', cat: 'Self-Care', href: 'Wellness.dc.html', name: 'No. 01 Rehydration Formula \u2014 12 Pack', short: 'No. 01 Rehydration Formula', img: 'assets/1fd6a90417709ea661c9d93e1f47e62d.jpg', alt: 'No. 01 Rehydration Formula, white aluminium can', hover: 'assets/c6383f38bac3ae0af2ed79bf9b9dfd78.jpg', hoverAlt: 'No. 01 Rehydration Formula, back of can with nutrition facts', w: { uv: 0.9, air: 0.2, rain: 0 } },
+      { id: 'rain', page: 'Product-rain.dc.html', cat: 'Protective Gear', href: 'Apparel.dc.html', name: 'Technical Rain Jacket', short: 'Technical Rain Jacket', img: 'assets/d86cc1d2c0ffe3f9b2fd836a063f0f6d.jpg', alt: 'Technical Rain Jacket, front view on model', hover: 'assets/6c6cb0e328ca92311d7e666606e3720d.jpg', hoverAlt: 'Technical Rain Jacket, back view on model', w: { uv: 0, air: 0.1, rain: 1 } },
+      { id: 'hazmat', page: 'Product-hazmat.dc.html', cat: 'Protective Gear', href: 'Apparel.dc.html', name: 'Hazmat Suit', short: 'Hazmat Suit', img: 'assets/2f0ba8b8e454ab5f24aa3e0c366c47dc.png', alt: 'Hazmat Suit, front view on model', hover: 'assets/99a3beb5d04b87cfcea729d7b9bc57f4.png', hoverAlt: 'Hazmat Suit, back view on model', w: { uv: 0.2, air: 0.8, rain: 0.6 } },
+      { id: 'fan', page: 'Product-fan.dc.html', cat: 'Protective Gear', href: 'Apparel.dc.html', name: 'Cooling Fan Jacket', short: 'Cooling Fan Jacket', img: 'assets/7aa9652491ac712ac52b349514fe0886.jpg', alt: 'Cooling Fan Jacket, front view on model', hover: 'assets/d63ce7a7341347c4f2d4c2379f6f4732.jpg', hoverAlt: 'Cooling Fan Jacket, back view with printed logo', w: { uv: 0.9, air: 0.1, rain: 0 } },
+      { id: 'vest', page: 'Product-vest.dc.html', cat: 'Protective Gear', href: 'Apparel.dc.html', name: 'Battery Heated Puffer Jacket', short: 'Battery Heated Puffer Jacket', img: 'assets/2f91e4c4f2538401374fa532503c340e.jpg', alt: 'Battery Heated Puffer Jacket, front view on model', hover: 'assets/255995064227e0ed0a583c691867b220.jpg', hoverAlt: 'Battery Heated Puffer Jacket, back view on model', w: { uv: 0, air: 0.2, rain: 0.4 } },
+      { id: 'boot', page: 'Product-boot.dc.html', cat: 'Protective Gear', href: 'Apparel.dc.html', name: 'All-Terrain Boots', short: 'All-Terrain Boots', img: 'assets/154ba0a698e9cb7f8abdaf9f7220cf27.jpg', alt: 'All-Terrain Boots, black, pair front three-quarter view', hover: 'assets/6b8807cd5cbe88f540754fdf308a7bbd.jpg', hoverAlt: 'All-Terrain Boots, black, side view', w: { uv: 0.1, air: 0.1, rain: 0.9 } },
+      { id: 'balm', page: 'Product-balm.dc.html', cat: 'Self-Care', href: 'Wellness.dc.html', name: 'Barrier Balm', short: 'Barrier Balm', img: 'assets/185791f3d855120b583c72895ea65e23.jpg', alt: 'Barrier Balm, round polished silver compact seen from above', hover: 'assets/d1960c7d75f850bf9db5ec8b161c2225.png', hoverAlt: 'Barrier Balm, front three-quarter view with embossed lid', w: { uv: 0.8, air: 0.4, rain: 0.3 } },
+      { id: 'rinse', page: 'Product-rinse.dc.html', cat: 'Self-Care', href: 'Wellness.dc.html', name: 'RINSE/ZERO \u2014 All-in-One Body Wash 400 mL', short: 'RINSE/ZERO', img: 'assets/be21e38702ea75c7a5878e536c4f2555.png', alt: 'RINSE/ZERO all-in-one body wash, frosted translucent bottle with grey label', hover: 'assets/55025e8e1c530932d36b2ee8acc4ae7b.png', hoverAlt: 'RINSE/ZERO, back label with ingredients and barcode', w: { uv: 0.2, air: 0.8, rain: 0.8 } },
+      { id: 'flask', page: 'Product-flask.dc.html', cat: 'Self-Care', href: 'Wellness.dc.html', name: 'Soft Thermal Flask \u2014 500 mL', short: 'Soft Thermal Flask', img: 'assets/dfd30376c0801562ba834291f5fd519d.jpg', alt: 'Soft Thermal Flask, silver soft flask', hover: 'assets/b4b1e59bfdce03c838a5831ed7ee39dd.jpg', hoverAlt: 'Soft Thermal Flask, label side', w: { uv: 0.7, air: 0.1, rain: 0.2 } },
+      { id: 'strip', page: 'Product-strip.dc.html', cat: 'Self-Care', href: 'Wellness.dc.html', name: 'Daily Supplement Strip \u2014 21 Capsules', short: 'Daily Supplement Strip', img: 'assets/1bfd361065ad5a8c1afeeec4406e72d3.jpg', alt: 'Daily Supplement Strip, seven capsules in a silver blister', hover: 'assets/1d55b93438f136db9828e8e4f89ea378.png', hoverAlt: 'Daily Supplement Strip, three strips in an open aluminium tin', w: { uv: 0.4, air: 0.5, rain: 0.3 } },
+      { id: 'perfume', page: 'Product-perfume.dc.html', cat: 'Self-Care', href: 'Wellness.dc.html', name: 'FOREST-01 / AQI 0 \u2014 Eau de Parfum 50 mL', short: 'FOREST-01 / AQI 0', img: 'assets/5e33f31ec654700be91cd3a48200d512.png', alt: 'FOREST-01 / AQI 0 perfume, clear pebble-shaped glass bottle with black cap', hover: 'assets/65e24d0706ac8f1dcb9a473ea8232fbc.png', hoverAlt: 'FOREST-01 / AQI 0 white box packaging, front', w: { uv: 0, air: 0.6, rain: 0.1 } },
+      { id: 'mask', page: 'Product-mask.dc.html', cat: 'Equipment', href: 'Accessories.dc.html', name: 'Gas Mask', short: 'Gas Mask', img: 'assets/044cf0eb50a40a36bf7b382510406339.png', alt: 'Gas Mask, front view on model', hover: 'assets/b978282d49ebb7c90344e23047e49088.jpg', hoverAlt: 'Gas Mask, side profile on model', w: { uv: 0, air: 1, rain: 0.1 } },
+      { id: 'shield', page: 'Product-shield.dc.html', cat: 'Equipment', href: 'Accessories.dc.html', name: 'Solar Shield Sunglass', short: 'Solar Shield Sunglass', img: 'assets/2bc47d4b5e63ee17ab043f0a5726dd5a.jpg', alt: 'Solar Shield Sunglass, front view on model', hover: 'assets/9b6c30711a883acf026551a23e813ca8.jpg', hoverAlt: 'Solar Shield Sunglass, side view on model with embossed temple logo', w: { uv: 1, air: 0.1, rain: 0 } },
+      { id: 'balaclava', page: 'Product-balaclava.dc.html', cat: 'Equipment', href: 'Accessories.dc.html', name: 'Daily Balaclava', short: 'Daily Balaclava', img: 'assets/1932e28de9ce01ca94391f06cc9c6603.jpg', alt: 'Daily Balaclava in black, front view on model', hover: 'assets/cd2adfcb34eccf652ed6cc4c510db33f.jpg', hoverAlt: 'Daily Balaclava in white, front view on model', w: { uv: 0.3, air: 0.9, rain: 0.2 } },
+      { id: 'backpack', page: 'Product-backpack.dc.html', cat: 'Equipment', href: 'Accessories.dc.html', name: 'Survival Backpack', short: 'Survival Backpack', img: 'assets/ba316c46a3308bda6f4ea9df8feebb08.png', alt: 'Survival Backpack, rounded black molded-shell backpack, front view', hover: 'assets/d40cd02eaaf3224e5367d0ead9bf6925.png', hoverAlt: 'Survival Backpack, back view with padded shoulder straps', w: { uv: 0.3, air: 0.4, rain: 0.7 } },
+      { id: 'spacesuit', page: 'Product-spacesuit.dc.html', cat: 'Protective Gear', href: 'Apparel.dc.html', name: 'Space Project 01 Suit', short: 'Space Project 01 Suit', img: 'assets/797035594a1f285858e59c50dc239238.png', alt: 'Space Project 01 Suit, front view on model', hover: 'assets/44e65cb7877e5eb8095b6611c42d780f.jpg', hoverAlt: 'Space Project 01 Suit, back view on model', w: { uv: 0.8, air: 0.8, rain: 0.6 } },
+      { id: 'cargo', page: 'Product-cargo.dc.html', cat: 'Protective Gear', href: 'Apparel.dc.html', name: 'Waist Protect Cargo Pants', short: 'Waist Protect Cargo Pants', img: 'assets/5c4d72d387eb9c1289437e4bc022efc0.jpg', alt: 'Waist Protect Cargo Pants, front view on model', hover: 'assets/fb30454065b70c1c68767acc3d36fa0d.jpg', hoverAlt: 'Waist Protect Cargo Pants, three-quarter view', w: { uv: 0.2, air: 0.3, rain: 0.4 } },
+      { id: 'top', page: 'Product-top.dc.html', cat: 'Protective Gear', href: 'Apparel.dc.html', name: 'Technical Base Layer Top', short: 'Technical Base Layer Top', img: 'assets/93cc1d979a2c3824a15dec47657c5dcf.jpg', alt: 'Technical Base Layer Top, front view on model', hover: 'assets/a685425bc646c9f5a7055fe3af79824c.jpg', hoverAlt: 'Technical Base Layer Top, back view on model', w: { uv: 0.5, air: 0.2, rain: 0.1 } },
+      { id: 'topw', page: 'Product-topw.dc.html', cat: 'Protective Gear', href: 'Apparel.dc.html', name: 'Technical Base Layer Top \u2014 Women\u2019s', short: 'Technical Base Layer Top \u2014 Women\u2019s', img: 'assets/eba5374b093aa30ccf6ecfe2ca7cd64c.jpg', alt: 'Technical Base Layer Top, women\u2019s, front view on model', hover: 'assets/0cfe00fabbc45442193fb8b3add6fd26.jpg', hoverAlt: 'Technical Base Layer Top, women\u2019s, back view on model', w: { uv: 0.5, air: 0.2, rain: 0.1 } }
+    ];
+  }
+  zoneDefs() {
+    return {
+      coastal: { name: 'Coastal Zone', note: 'Acid rain and flooding. Salt in the air.', air: [60, 90], uv: [3, 5], rain: [50, 40] },
+      inland: { name: 'Inland Zone', note: 'Extreme heat and UV. Dry wind.', air: [50, 100], uv: [8, 4], rain: [0, 30] },
+      urban: { name: 'Urban Zone', note: 'Particulate haze. Low visibility.', air: [160, 80], uv: [4, 4], rain: [10, 40] },
+      highland: { name: 'Highland Zone', note: 'Thin air. Sudden temperature shifts.', air: [30, 60], uv: [7, 5], rain: [20, 40] }
+    };
+  }
+  readZone() {
+    try { return window.localStorage.getItem('dmg-zone') || ''; } catch (e) { return (this.state && this.state.zone) || ''; }
+  }
+  writeZone(z) {
+    try { window.localStorage.setItem('dmg-zone', z); } catch (e) {}
+  }
+  conditions(d) {
+    d = d || new Date();
+    const s = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+    let seed = 7;
+    for (let i = 0; i < s.length; i++) seed = (seed * 131 + s.charCodeAt(i)) % 2147483647;
+    const rnd = () => { seed = (seed * 48271) % 2147483647; return seed / 2147483647; };
+    rnd(); rnd(); rnd();
+    const r1 = rnd(), r2 = rnd(), r3 = rnd();
+    const zd = this.zoneDefs()[this.readZone()];
+    const air = zd ? Math.round(zd.air[0] + r1 * zd.air[1]) : Math.round(40 + r1 * 200);
+    const uv = zd ? Math.round(zd.uv[0] + r2 * zd.uv[1]) : Math.round(2 + r2 * 10);
+    const rain = zd ? Math.round((zd.rain[0] + r3 * zd.rain[1]) / 10) * 10 : Math.round(r3 * 9) * 10;
+    const uvLabel = uv >= 11 ? 'Extreme' : uv >= 8 ? 'Very high' : uv >= 6 ? 'High' : uv >= 3 ? 'Moderate' : 'Low';
+    const threat = { uv: uv / 11, air: air / 200, rain: rain / 80 };
+    const worst = Math.max(threat.uv, threat.air, threat.rain);
+    const mins = Math.max(30, Math.round((6 - 4.5 * worst) * 2) * 30);
+    const hours = mins < 60 ? mins + ' min' : (mins / 60) + (mins === 60 ? ' hr' : ' hrs');
+    return { air, uv, rain, uvLabel, threat, hours, mins };
+  }
+  bagCat() {
+    return { can: ['No. 01 Rehydration Formula — 12 Pack', 'assets/1fd6a90417709ea661c9d93e1f47e62d.jpg', 30, 'Product-can.dc.html'], rain: ['Technical Rain Jacket', 'assets/d86cc1d2c0ffe3f9b2fd836a063f0f6d.jpg', 680, 'Product-rain.dc.html'], hazmat: ['Hazmat Suit', 'assets/2f0ba8b8e454ab5f24aa3e0c366c47dc.png', 620, 'Product-hazmat.dc.html'], fan: ['Cooling Fan Jacket', 'assets/7aa9652491ac712ac52b349514fe0886.jpg', 740, 'Product-fan.dc.html'], vest: ['Battery Heated Puffer Jacket', 'assets/2f91e4c4f2538401374fa532503c340e.jpg', 720, 'Product-vest.dc.html'], boot: ['All-Terrain Boots', 'assets/154ba0a698e9cb7f8abdaf9f7220cf27.jpg', 450, 'Product-boot.dc.html'], balm: ['Barrier Balm', 'assets/185791f3d855120b583c72895ea65e23.jpg', 36, 'Product-balm.dc.html'], rinse: ['RINSE/ZERO — All-in-One Body Wash', 'assets/be21e38702ea75c7a5878e536c4f2555.png', 24, 'Product-rinse.dc.html'], flask: ['Soft Thermal Flask — 500 mL', 'assets/dfd30376c0801562ba834291f5fd519d.jpg', 26, 'Product-flask.dc.html'], strip: ['Daily Supplement Strip', 'assets/1bfd361065ad5a8c1afeeec4406e72d3.jpg', 53, 'Product-strip.dc.html'], perfume: ['FOREST-01 / AQI 0', 'assets/5e33f31ec654700be91cd3a48200d512.png', 146, 'Product-perfume.dc.html'], mask: ['Gas Mask', 'assets/044cf0eb50a40a36bf7b382510406339.png', 540, 'Product-mask.dc.html'], shield: ['Solar Shield Sunglass', 'assets/2bc47d4b5e63ee17ab043f0a5726dd5a.jpg', 250, 'Product-shield.dc.html'], balaclava: ['Daily Balaclava', 'assets/1932e28de9ce01ca94391f06cc9c6603.jpg', 65, 'Product-balaclava.dc.html'], backpack: ['Survival Backpack', 'assets/ba316c46a3308bda6f4ea9df8feebb08.png', 200, 'Product-backpack.dc.html'], spacesuit: ['Space Project 01 Suit', 'assets/797035594a1f285858e59c50dc239238.png', 1530, 'Product-spacesuit.dc.html'], cargo: ['Waist Protect Cargo Pants', 'assets/5c4d72d387eb9c1289437e4bc022efc0.jpg', 320, 'Product-cargo.dc.html'], top: ['Technical Base Layer Top', 'assets/93cc1d979a2c3824a15dec47657c5dcf.jpg', 95, 'Product-top.dc.html'], topw: ['Technical Base Layer Top — Women’s', 'assets/eba5374b093aa30ccf6ecfe2ca7cd64c.jpg', 95, 'Product-topw.dc.html'] };
+  }
+  bagQty(id, size, d) {
+    let list = this.readItems();
+    const h = list.find((x) => x.id === id && (x.size || '') === (size || ''));
+    if (!h) return;
+    h.qty += d;
+    if (h.qty <= 0) list = list.filter((x) => x !== h);
+    this.writeItems(list);
+    this.setState({ bag: this.readBag(), items: list });
+  }
+  drawerVals() {
+    const C = this.bagCat();
+    const items = this.readItems().filter((x) => C[x.id]);
+    const fmt = (n) => '$' + n.toLocaleString('en-US');
+    const list = items.map((x) => { const c = C[x.id]; return { name: c[0], img: c[1], page: c[3], size: x.size ? 'Size ' + x.size : '', qty: x.qty, line: x.qty + ' × ' + fmt(c[2]), inc: () => this.bagQty(x.id, x.size, 1), dec: () => this.bagQty(x.id, x.size, -1), remove: () => this.bagQty(x.id, x.size, -9999) }; });
+    return {
+      drawerOpen: !!(this.state && this.state.drawer),
+      drawerList: list,
+      drawerEmpty: list.length === 0,
+      drawerCount: items.reduce((a, x) => a + x.qty, 0),
+      drawerSub: fmt(items.reduce((a, x) => a + C[x.id][2] * x.qty, 0)),
+      closeDrawer: () => this.setState({ drawer: false })
+    };
+  }
+  renderVals() {
+    const bag = (this.state && this.state.bag) || 0;
+    const add = () => {};
+    const c = this.conditions();
+    const score = (p) => p.w.uv * c.threat.uv + p.w.air * c.threat.air + p.w.rain * c.threat.rain;
+    const all = this.catalog().map((p) => ({ ...p, score: score(p) })).sort((a, b) => b.score - a.score);
+    const top = all[0];
+    const page = '';
+    const catOrder = ['Equipment', 'Self-Care', 'Protective Gear'];
+    const list = page === 'All'
+      ? all.slice().sort((a, b) => (catOrder.indexOf(a.cat) - catOrder.indexOf(b.cat)) || (b.score - a.score))
+      : all.filter((p) => p.cat === page);
+    const products = list.map((p, i) => ({ ...p, price: '[PRICE]', today: (page === 'All' ? p.id === top.id : i === 0) && p.score > 0.6, add: () => this.addItem(p.id, '') }));
+    const M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    let rid = '0417';
+    try { rid = window.localStorage.getItem('dmg-resident') || ''; if (!rid) { rid = String(1000 + Math.floor(Math.random() * 9000)); window.localStorage.setItem('dmg-resident', rid); } } catch (e) { rid = '0417'; }
+    const week = [];
+    for (let i = 6; i >= 0; i--) { const dt = new Date(Date.now() - i * 86400000); week.push({ ...this.conditions(dt), dt: dt }); }
+    const sum = (fn) => week.reduce((a, x) => a + fn(x), 0);
+    const expMin = sum((x) => x.mins);
+    const pm = Math.round(sum((x) => x.air * 0.62 * x.mins / 60));
+    const sed = sum((x) => x.uv * 0.45 * x.mins / 60).toFixed(1);
+    const rainDays = week.filter((x) => x.rain >= 50).length;
+    const avgThreat = sum((x) => Math.max(x.threat.uv, x.threat.air, x.threat.rain)) / 7;
+    const hyd = Math.max(41, Math.min(96, Math.round(96 - sum((x) => x.uv) / 7 * 3.2 - avgThreat * 6)));
+    const fmtH = (m) => Math.floor(m / 60) + ' hr' + (m % 60 ? ' ' + (m % 60) + ' min' : '');
+    const avgUv = sum((x) => x.uv) / 7, avgAir = sum((x) => x.air) / 7, avgRain = sum((x) => x.rain) / 7;
+    const balm = Math.max(1, Math.round(14 - avgUv)), filt = Math.max(1, Math.round(30 - avgAir / 9)), cans = Math.max(1, Math.round(12 - avgUv * 0.8)), shell = Math.max(5, Math.round(100 - avgRain * 0.6));
+    const zKey = this.readZone(), zDef = this.zoneDefs()[zKey];
+    const rn = parseInt(rid, 10) || 417;
+    const lat = (20 + (rn * 7919 % 4000) / 100).toFixed(4), lon = (100 + (rn * 104729 % 4500) / 100).toFixed(4);
+    const coords = lat + '\u00b0 N, ' + lon + '\u00b0 E';
+    const status = avgThreat > 0.85 ? 'Attention required' : avgThreat > 0.55 ? 'Elevated' : 'Within tolerance';
+    const r = {
+      id: rid,
+      zone: zDef ? zDef.name : 'Zone not set',
+      period: M[week[0].dt.getMonth()] + ' ' + week[0].dt.getDate() + ' \u2013 ' + M[week[6].dt.getMonth()] + ' ' + week[6].dt.getDate() + ', ' + week[6].dt.getFullYear(),
+      status: status,
+      dot: status === 'Within tolerance' ? '#6D7072' : status === 'Elevated' ? '#B5832E' : '#B3412E',
+      metrics: [
+        { label: 'Outdoor exposure', value: fmtH(expMin), unit: '', note: 'Past 7 days' },
+        { label: 'Particulates inhaled', value: pm, unit: '\u00b5g', note: 'PM2.5, estimated' },
+        { label: 'UV dose', value: sed, unit: 'SED', note: 'Standard erythema dose' },
+        { label: 'Acid rain contact', value: rainDays, unit: rainDays === 1 ? 'day' : 'days', note: 'Precipitation pH below 5.0' },
+        { label: 'Hydration index', value: hyd, unit: '%', note: hyd < 70 ? 'Below recommended' : 'Within range' },
+        { label: 'Air today', value: c.air, unit: 'AQI', note: 'UV ' + c.uv + ' \u00b7 Acid rain ' + c.rain + '%' }
+      ],
+      coords: coords,
+      days: week.slice().reverse().map((x) => ({ date: M[x.dt.getMonth()] + ' ' + x.dt.getDate(), hours: x.hours, air: x.air, uv: x.uv + ' ' + x.uvLabel, rain: x.rain }))
+    };
+    const now = new Date();
+    let ws = 11; const ds = now.getFullYear() + '/' + now.getMonth() + '/' + now.getDate();
+    for (let i = 0; i < ds.length; i++) ws = (ws * 131 + ds.charCodeAt(i)) % 2147483647;
+    const wr = () => { ws = (ws * 48271) % 2147483647; return ws / 2147483647; };
+    const temp = Math.round(18 + wr() * 21 + c.threat.uv * 4), hum = Math.round(28 + wr() * 60), wind = Math.round(4 + wr() * 38);
+    const wDirs = ['N','NE','E','SE','S','SW','W','NW'];
+    const hrs = []; const wPhase = wr() * 6.28;
+    for (let i = 0; i < 12; i++) {
+      const hd = new Date(now.getTime() + i * 3600000), hh = hd.getHours();
+      const DC = [-20, -23, -25, -27, -28, -28, -22, -14, -4, 7, 18, 28, 36, 42, 46, 47, 44, 35, 20, 6, -4, -11, -15, -18];
+      const hf = hd.getHours() + hd.getMinutes() / 60, h0 = Math.floor(hf) % 24, h1 = (h0 + 1) % 24;
+      const t = Math.max(-31, Math.min(54, Math.round(DC[h0] + (DC[h1] - DC[h0]) * (hf - Math.floor(hf)) + (wr() - 0.5) * 4)));
+      hrs.push({ t: t, label: i === 0 ? 'Now' : String(hh).padStart(2, '0'), rain: Math.max(0, Math.min(100, Math.round((c.rain + (wr() - 0.5) * 40) / 10) * 10)) });
+    }
+    const tMin = Math.min(...hrs.map((h) => h.t)), tMax = Math.max(...hrs.map((h) => h.t)), tR = Math.max(1, tMax - tMin);
+    const P = hrs.map((h, i) => [i * 10 + 5, 4 + (1 - (h.t - tMin) / tR) * 28]);
+    const cl = (v) => Math.max(1, Math.min(35, v));
+    const Q = [[0, cl(P[0][1] - (P[1][1] - P[0][1]) / 2)]].concat(P, [[120, cl(P[11][1] + (P[11][1] - P[10][1]) / 2)]]);
+    let line = 'M0,' + Q[0][1].toFixed(2);
+    for (let i = 0; i < Q.length - 1; i++) {
+      const p0 = Q[i - 1] || Q[i], p1 = Q[i], p2 = Q[i + 1], p3 = Q[i + 2] || Q[i + 1];
+      line += ' C' + (p1[0] + (p2[0] - p0[0]) / 6).toFixed(2) + ',' + (p1[1] + (p2[1] - p0[1]) / 6).toFixed(2) + ' ' + (p2[0] - (p3[0] - p1[0]) / 6).toFixed(2) + ',' + (p2[1] - (p3[1] - p1[1]) / 6).toFixed(2) + ' ' + p2[0] + ',' + p2[1].toFixed(2);
+    }
+    const area = line + ' L120,36 L0,36 Z';
+    const tBand = (t) => t <= -20 ? ['Extreme cold', 'Frostbite in minutes. Stay indoors; if you must go out, Battery Heated Puffer Jacket and Daily Balaclava.']
+      : t <= 0 ? ['Freezing', 'Wear the Battery Heated Puffer Jacket over a Technical Base Layer. Cover exposed skin.']
+      : t <= 15 ? ['Cool', 'Technical Base Layer recommended. Keep a Soft Thermal Flask warm.']
+      : t <= 27 ? ['Mild', 'Safe window for outdoor exposure. Normal precautions.']
+      : t <= 37 ? ['Hot', 'Hydrate every hour with No. 01 Rehydration Formula. Seek shade.']
+      : t <= 45 ? ['Extreme heat', 'Cooling Fan Jacket and Solar Shield Sunglass. Limit time outside.']
+      : ['Lethal heat', 'Stay indoors. Heatstroke risk within minutes outside.'];
+    hrs.forEach((h, i) => {
+      const y = P[i][1] / 36 * 100, b = tBand(h.t);
+      h.y = y.toFixed(1); h.status = b[0]; h.advice = b[1];
+      h.tipTop = y < 50 ? 'calc(' + y.toFixed(1) + '% + 12px)' : 'calc(' + y.toFixed(1) + '% - 12px)';
+      const ty = y < 50 ? '0' : '-100%';
+      if (i < 2) { h.tipLeft = '0'; h.tipX = 'translate(0, ' + ty + ')'; }
+      else if (i > 9) { h.tipLeft = '100%'; h.tipX = 'translate(-100%, ' + ty + ')'; }
+      else { h.tipLeft = '50%'; h.tipX = 'translate(-50%, ' + ty + ')'; }
+    });
+    const fc = [];
+    for (let i = 1; i <= 7; i++) {
+      const dd = new Date(now.getTime() + i * 86400000), cc = this.conditions(dd);
+      const hi = Math.round((i % 2 ? 22 : -8) + wr() * 30), lo = hi - Math.round(18 + wr() * 26);
+      fc.push({ day: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][dd.getDay()], uv: cc.uv, air: cc.air, hi: hi, lo: lo });
+    }
+    const gLo = Math.min(...fc.map((d) => d.lo)), gHi = Math.max(...fc.map((d) => d.hi)), gR = Math.max(1, gHi - gLo);
+    fc.forEach((d) => { d.left = Math.round((d.lo - gLo) / gR * 100); d.width = Math.max(4, Math.round((d.hi - d.lo) / gR * 100)); });
+    const w = {
+      hours: hrs, line: line, area: area, days: fc,
+      date: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][now.getDay()] + ', ' + M[now.getMonth()] + ' ' + now.getDate(),
+      items: [
+        { label: 'Temperature', value: hrs[0].t, unit: '\u00b0C' },
+        { label: 'Humidity', value: hum, unit: '%' },
+        { label: 'Wind', value: wind, unit: 'km/h ' + wDirs[Math.floor(wr() * 8)] },
+        { label: 'Air quality', value: c.air, unit: 'AQI' },
+        { label: 'UV index', value: c.uv, unit: c.uvLabel },
+        { label: 'Acid rain', value: c.rain, unit: '%' },
+        { label: 'Outdoor exposure', value: c.hours, unit: 'max' }
+      ]
+    };
+    const photo = (this.state && this.state.photo !== undefined) ? this.state.photo : this.readPhoto();
+    const pickPhoto = (e) => {
+      const f = e && e.target && e.target.files && e.target.files[0];
+      if (!f) return;
+      const rd = new FileReader();
+      rd.onload = () => {
+        const img = new Image();
+        img.onload = () => {
+          const n = 320, cv = document.createElement('canvas'); cv.width = n; cv.height = n;
+          const sc = Math.max(n / img.width, n / img.height), dw = img.width * sc, dh = img.height * sc;
+          cv.getContext('2d').drawImage(img, (n - dw) / 2, (n - dh) / 2, dw, dh);
+          const url = cv.toDataURL('image/jpeg', 0.85);
+          try { window.localStorage.setItem('dmg-photo-v2', url); } catch (err) {}
+          this.setState({ photo: url });
+        };
+        img.src = rd.result;
+      };
+      rd.readAsDataURL(f);
+    };
+    const reasons = { uv: 'For UV exposure', air: 'For particulate air', rain: 'For acid rain' };
+    const replen = all.slice(0, 3).map((p) => { const t = ['uv', 'air', 'rain'].sort((a, b) => p.w[b] * c.threat[b] - p.w[a] * c.threat[a])[0]; return { ...p, reason: reasons[t], add: () => this.addItem(p.id, '') }; });
+    const zone = (this.state && this.state.zone !== undefined) ? this.state.zone : this.readZone();
+    const zdefs = this.zoneDefs();
+    const zones = Object.keys(zdefs).map((k) => ({ name: zdefs[k].name, note: zdefs[k].note, border: k === zone ? '#141516' : '#E4E5E5', pick: () => { this.writeZone(k); this.setState({ zone: k, choosing: false }); } }));
+    const tabKeys = [['overview', 'Overview'], ['orders', 'Orders'], ['wishlist', 'Wishlist'], ['addresses', 'Addresses'], ['payment', 'Payment'], ['settings', 'Account details']];
+    const curTab = (this.state && this.state.tab) || 'overview';
+    const tab = {}; tabKeys.forEach((k) => { tab[k[0]] = k[0] === curTab; });
+    const tabs = tabKeys.map((k) => ({ label: k[1], on: k[0] === curTab ? 'true' : 'false', pick: () => this.setState({ tab: k[0] }) }));
+    const PRC = { balaclava: 65, shield: 250, mask: 540, rinse: 24, balm: 36, strip: 53, can: 30, flask: 26, perfume: 146, top: 95, topw: 95, cargo: 320, boot: 450, rain: 680, vest: 720, fan: 740, hazmat: 620, spacesuit: 1530, backpack: 200 };
+    const money = (n) => '$' + n.toLocaleString('en-US');
+    const cat = this.catalog(), byId = (id) => cat.find((p) => p.id === id);
+    const rnum = parseInt(rid, 10) || 417;
+    const odate = (d) => { const x = new Date(Date.now() - d * 86400000); return M[x.getMonth()] + ' ' + x.getDate() + ', ' + x.getFullYear(); };
+    const mk = (n, d, ids, st) => { const items = ids.map(byId); const tot = ids.reduce((a, id) => a + (PRC[id] || 0), 0); const o = { no: 'Order DMG-' + (rnum * 7 + n), date: odate(d), count: ids.length + (ids.length === 1 ? ' item' : ' items'), total: money(tot), status: st, dot: st === 'Delivered' ? '#8A8D8F' : st === 'In transit' ? '#2350F2' : '#FFAE00' }; [0, 1, 2].forEach((k) => { const it = items[k]; o['i' + (k + 1)] = it ? it.img : ''; o['p' + (k + 1)] = it ? it.page : ''; o['a' + (k + 1)] = it ? it.alt : ''; }); return o; };
+    const orders = [mk(311, 2, ['rain', 'can'], 'In transit'), mk(298, 19, ['mask', 'strip', 'balm'], 'Delivered'), mk(274, 47, ['shield'], 'Delivered')];
+    const wish = ((this.state && this.state.wish) || this.wishList()).filter((id) => byId(id)).map((id) => ({ ...byId(id), price: money(PRC[id] || 0), add: () => this.addItem(id, ''), remove: () => this.toggleWish(id) }));
+    const acct = { name: 'Resident ' + rid, first: 'Resident', last: rid, email: 'resident' + rid + '@dmg.goods', phone: '+00 ' + String(rnum * 9173).slice(0, 4) + ' ' + String(rnum * 4421).slice(0, 4), since: odate(400).split(', ')[1] };
+    const addr = { line1: 'Tower ' + String.fromCharCode(65 + rnum % 6) + ', Floor ' + (rnum % 40 + 3) + ', Unit ' + (rnum % 18 + 1), line2: 'Habitation District ' + (rnum % 9 + 1) };
+    const replenP = replen.map((p) => ({ ...p, price: money(PRC[p.id] || 0) }));
+    return {
+      ...this.drawerVals(),
+      showZone: !zone || !!(this.state && this.state.choosing),
+      hasZone: !!zone,
+      zoneName: zone ? zdefs[zone].name : '',
+      openZone: () => this.setState({ choosing: true }),
+      zones: zones,
+      r: r,
+      w: w,
+      nowT: hrs[0].t,
+      photo: photo || '',
+      hasPhoto: !!photo,
+      noPhoto: !photo,
+      pickPhoto: pickPhoto,
+      replen: replenP,
+      tab: tab, tabs: tabs, orders: orders, last: orders[0], wish: wish, wishCount: wish.length, wishEmpty: wish.length === 0, acct: acct, addr: addr,
+      goOrders: () => this.setState({ tab: 'orders' }), goWish: () => this.setState({ tab: 'wishlist' }), goAddr: () => this.setState({ tab: 'addresses' }),
+      bag: bag,
+      add: add,
+      c: { zoneLabel: this.coordsLabel() + ' \u2014 ', air: c.air, uv: c.uv, uvLabel: c.uvLabel, rain: c.rain, hours: c.hours, essential: top.short, essentialHref: top.href },
+      products: products
+    };
+  }
+}
+</script>
+</body>
+</html>

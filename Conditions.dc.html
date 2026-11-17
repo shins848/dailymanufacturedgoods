@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Daily Manufactured Goods — Conditions</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#141516;text-decoration:none}
+a:hover{color:#6D7072}
+.dmg-pill{border:0;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;height:28px;padding:0 14px;border-radius:999px;background:rgba(20,21,22,0.06);color:#141516;font-size:12px;line-height:1;letter-spacing:0;transition:background .15s}
+.dmg-pill:hover{background:rgba(20,21,22,0.11);color:#141516}
+.dmg-pill[aria-current="page"]{background:rgba(20,21,22,0.11)}
+.dmg-shop{position:relative}
+.dmg-menu{display:none;position:absolute;left:0;top:100%;padding-top:8px;z-index:20}
+.dmg-shop:hover .dmg-menu,.dmg-shop:focus-within .dmg-menu{display:block}
+.dmg-menu-panel{display:flex;flex-direction:column;min-width:160px;padding:8px 6px;border-radius:18px;background:rgba(242,242,242,0.86);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
+.dmg-menu-panel a{padding:8px 14px;font-size:12px;color:#141516;border-radius:14px}
+.dmg-menu-panel a:hover{color:#8A8D8F}
+.dmg-info-item{padding:8px 14px;font-size:12px;color:#141516;border-radius:14px;cursor:default}
+.dmg-info-item:hover{color:#8A8D8F}
+.dmg-menu-panel a[aria-current="page"]{color:#9A9D9F}
+.dmg-add{align-self:flex-start}
+.dmg-alt{opacity:0;transition:opacity .35s ease}
+.dmg-thumb:hover .dmg-alt{opacity:1}
+.dmg-hero{display:grid;grid-template-columns:minmax(260px,1fr) minmax(0,2.4fr);column-gap:40px;row-gap:40px;align-items:center}
+@media (max-width:1000px){.dmg-hero{grid-template-columns:1fr}}
+div:hover > .dmg-strip{height:12px !important}
+.dmg-fade{transition:fill .9s ease,stop-color .9s ease,background-color .9s ease}
+.dmg-tick{border:0;background:transparent;font-family:inherit;color:#8A8D8F;cursor:pointer;padding:12px 0 10px;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;font-variant-numeric:tabular-nums;border-top:1px solid #E4E5E5;transition:color .2s}
+.dmg-tick:hover{color:#141516}
+.dmg-tick[aria-pressed="true"]{color:#141516;border-top:1px solid #141516}
+.dmg-tick-dot{width:8px;height:8px;border-radius:50%}
+.dmg-col{cursor:pointer}
+.dmg-col:hover{background:rgba(20,21,22,0.03)}
+@media (prefers-reduced-motion:reduce){.dmg-fade{transition:none}}
+.dmg-dot{border:0;background:transparent;padding:10px 0;cursor:pointer;display:flex;justify-content:center;align-items:center}
+.dmg-dot span{display:block;width:10px;height:10px;border-radius:50%;transition:transform .25s ease,box-shadow .25s ease}
+.dmg-dot:hover span{transform:scale(1.5)}
+.dmg-dot[aria-pressed="true"] span{transform:scale(1.8);box-shadow:0 0 0 1.5px #FFFFFF,0 0 0 2.5px #141516}
+.dmg-dot:focus-visible{outline:1px solid #141516;outline-offset:2px}
+.dmg-day svg{transition:transform .3s ease}
+.dmg-day:hover svg{transform:scale(1.06)}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #FFFFFF">
+<header style="background: transparent; color: #141516; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; position: relative; z-index: 10">
+<div style="max-width: 1440px; margin: 0 auto; padding: 16px 32px; box-sizing: border-box; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; column-gap: 16px">
+<nav aria-label="Main" style="display: flex; justify-content: flex-start; align-items: center; flex-wrap: wrap; gap: 6px">
+<a class="dmg-pill" href="About.dc.html">About</a>
+<div class="dmg-shop">
+<button class="dmg-pill" type="button" aria-haspopup="true">Shop</button>
+<div class="dmg-menu">
+<div class="dmg-menu-panel">
+<a href="ShopAll.dc.html">Shop All</a>
+<a href="Accessories.dc.html">Equipment</a>
+<a href="Wellness.dc.html">Self-Care</a>
+<a href="Apparel.dc.html">Protective Gear</a>
+</div>
+</div>
+</div>
+<div class="dmg-shop">
+<button class="dmg-pill" type="button" aria-haspopup="true">Info</button>
+<div class="dmg-menu">
+<div class="dmg-menu-panel">
+<span class="dmg-info-item">Contact</span>
+<span class="dmg-info-item">Terms</span>
+<span class="dmg-info-item">Shipping</span>
+<span class="dmg-info-item">Refund Policy</span>
+</div>
+</div>
+</div>
+</nav>
+<a href="Main.dc.html" aria-label="Daily Manufactured Goods, home" style="display: block; line-height: 0">
+<img src="assets/bf44164c27f73720cbdfe4d095b452bf.png" alt="Daily Manufactured Goods" style="height: 28px; width: auto; display: block">
+</a>
+<nav aria-label="Account" style="display: flex; justify-content: flex-end; align-items: center; flex-wrap: wrap; gap: 6px">
+<a class="dmg-pill" href="Conditions.dc.html" aria-current="page">Conditions</a>
+<a class="dmg-pill" href="Account.dc.html">Account</a>
+<a class="dmg-pill" href="Bag.dc.html" aria-label="Bag, {{bag}} items">Bag ({{bag}})</a>
+</nav>
+</div>
+</header>
+<main role="img" aria-label="Conditions at {{s.when}}: {{s.t}} degrees, {{s.level}}. {{s.line}}" tabindex="0" onKeyDown="{{keys}}" onMouseDown="{{dragStart}}" onMouseMove="{{dragMove}}" onMouseUp="{{dragEnd}}" onMouseLeave="{{dragEnd}}" onTouchStart="{{dragStart}}" onTouchMove="{{dragMove}}" onTouchEnd="{{dragEnd}}" class="dmg-fade" style="position: relative; box-sizing: border-box; height: calc(100vh - 60px); min-height: 520px; overflow: hidden; background: {{s.bg}}; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: {{s.ink}}; -webkit-font-smoothing: antialiased; outline: none; transition: background-color .9s ease, color .9s ease">
+<div aria-hidden="true" class="dmg-fade" style="position: absolute; left: 50%; top: 50%; width: 42vmin; height: 42vmin; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle at 46% 46%, {{s.core}} 0%, {{s.ring}} 55%, {{s.glow}} 78%, rgba(255,255,255,0) 100%); filter: blur(18px); pointer-events: none"></div>
+<canvas id="dmgOrbCanvas" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; background: #FFFFFF"></canvas>
+<div aria-hidden="true" class="dmg-fade" style="position: absolute; top: 0; right: 0; bottom: 0; width: 26vw; background: linear-gradient(90deg, rgba(255,255,255,0), {{s.nextCol}}); opacity: 0.14; pointer-events: none; transition: background .9s ease"></div>
+<div style="position: absolute; left: 32px; top: 28px; bottom: 64px; display: flex; flex-direction: column; justify-content: space-between; gap: 24px; pointer-events: none">
+<div style="display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<p style="margin: 0; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; font-variant-numeric: tabular-nums">{{s.when}}</p>
+<p style="margin: 0; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; font-variant-numeric: tabular-nums; opacity: 0.55">{{coords}}</p>
+</div>
+<div style="display: grid; grid-template-columns: auto auto; justify-content: start; column-gap: 20px; row-gap: 7px; font-size: 11px; font-variant-numeric: tabular-nums">
+<sc-for list="{{s.stats}}" as="k" hint-placeholder-count="8"><span style="letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.55">{{k.label}}</span><span style="letter-spacing: 0.04em">{{k.value}}</span></sc-for>
+</div>
+<div style="display: flex; flex-direction: column; gap: 7px; font-size: 11px; letter-spacing: 0.06em; font-variant-numeric: tabular-nums">
+<p style="margin: 0 0 3px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.55">Next hours</p>
+<sc-for list="{{s.next}}" as="x" hint-placeholder-count="4"><p style="margin: 0; display: grid; grid-template-columns: 8px 44px 40px auto; align-items: center; gap: 10px; text-transform: uppercase"><span style="width: 8px; height: 8px; border-radius: 50%; background: {{x.col}}"></span><span>{{x.label}}</span><span style="text-align: right">{{x.t}}°</span><span>{{x.n}}</span></p></sc-for>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<p style="margin: 0; font-size: clamp(64px, 9vw, 120px); line-height: 0.9; font-weight: 300; letter-spacing: -0.04em; font-variant-numeric: tabular-nums">{{s.t}}°</p>
+<p style="margin: 0; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase">{{s.level}}</p>
+</div>
+</div>
+<p style="position: absolute; left: 50%; bottom: 60px; transform: translateX(-50%); margin: 0; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.55; white-space: nowrap; pointer-events: none">Move along the strip to pass the day</p>
+<div aria-hidden="true" onMouseMove="{{scrub}}" onMouseDown="{{scrub}}" onTouchStart="{{scrub}}" onTouchMove="{{scrub}}" style="position: absolute; left: 0; right: 0; bottom: 0; height: 30px; cursor: ew-resize; touch-action: none">
+<div class="dmg-strip" style="position: absolute; left: 0; right: 0; bottom: 0; height: 6px; background: {{s.strip}}; transition: height .2s ease"></div>
+<span style="position: absolute; top: 4px; bottom: 0; left: {{s.mx}}%; width: 1px; background: {{s.ink}}; transition: left .2s ease"></span>
+<span style="position: absolute; bottom: 30px; left: {{s.mx}}%; transform: translateX({{s.mtx}}%); font-size: 11px; letter-spacing: 0.06em; font-variant-numeric: tabular-nums; white-space: nowrap; color: {{s.ink}}; pointer-events: none; transition: left .2s ease">{{s.mlabel}}</span>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  readItems() {
+    try { const v = JSON.parse(window.localStorage.getItem('dmg-bag') || '[]'); return Array.isArray(v) ? v : []; } catch (e) { return this._mem || []; }
+  }
+  writeItems(list) {
+    this._mem = list;
+    try { window.localStorage.setItem('dmg-bag', JSON.stringify(list)); } catch (e) {}
+  }
+  readBag() {
+    return this.readItems().reduce((a, x) => a + (x.qty || 0), 0);
+  }
+  addItem(id, size) {
+    const list = this.readItems();
+    const hit = list.find((x) => x.id === id && (x.size || '') === (size || ''));
+    if (hit) hit.qty += 1; else list.push({ id: id, size: size || '', qty: 1 });
+    this.writeItems(list);
+    this.setState({ bag: this.readBag(), items: list });
+  }
+  coordsLabel() {
+    let rid = '';
+    try { rid = window.localStorage.getItem('dmg-resident') || ''; if (!rid) { rid = String(1000 + Math.floor(Math.random() * 9000)); window.localStorage.setItem('dmg-resident', rid); } } catch (e) { rid = '0417'; }
+    const rn = parseInt(rid, 10) || 417;
+    return (20 + (rn * 7919 % 4000) / 100).toFixed(4) + '\u00b0 N, ' + (100 + (rn * 104729 % 4500) / 100).toFixed(4) + '\u00b0 E';
+  }
+  componentDidMount() {
+    this.setState({ bag: this.readBag() });
+    this.setState({ zone: this.readZone() });
+    this._sync = () => this.setState({ bag: this.readBag(), zone: this.readZone() });
+    window.addEventListener('storage', this._sync);
+    window.addEventListener('focus', this._sync);
+    this.orbStart();
+  }
+
+  orbStart() {
+    const VS = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
+    const FS = `precision highp float;
+uniform vec2 res;uniform float t;uniform vec3 cCore;uniform vec3 cRing;uniform vec3 cGlow;uniform vec3 cHint;uniform float risk;uniform float hintAmt;uniform float imp;uniform float impA;uniform float ph;uniform vec2 pull;
+float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+float n(vec2 p){vec2 i=floor(p),f=fract(p);vec2 u=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1,0)),u.x),mix(h(i+vec2(0,1)),h(i+vec2(1,1)),u.x),u.y);}
+float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<4;i++){v+=a*n(p);p*=2.03;a*=.5;}return v;}
+void main(){
+  vec2 uv=(gl_FragCoord.xy-.5*res)/res.y;
+  float sp=.55+.9*risk;
+  vec2 c=vec2(sin(t*.11*sp)*.012,cos(t*.09*sp)*.01)*(1.+risk);
+  vec2 q=uv-c-pull*.22;
+  vec2 w=vec2(fbm(q*2.+vec2(t*.07*sp,0.)),fbm(q*2.+vec2(5.2,-t*.06*sp)))-.5;
+  q+=w*(.035+.055*risk);
+  float ang=atan(q.y,q.x);
+  float R=.21*(1.+.03*sin(t*.35*sp));
+  float rr=R*(1.+(.05+.06*risk)*sin(2.*ang+t*.17*sp+ph)+(.035+.05*risk)*sin(3.*ang-t*.13*sp+ph*1.7)+.02*sin(5.*ang+t*.21+ph*.6)
+    +imp*(.11*sin(4.*ang+t*9.+ph)+.07*sin(7.*ang-t*13.)-.16*max(cos(ang-impA),0.)+.05));
+  float pm=min(length(pull),.3);float pa=atan(pull.y,pull.x+1e-5);float st=max(cos(ang-pa),0.);
+  rr+=pm*(.8*st*st*st-.18*max(-cos(ang-pa),0.))+pm*.03*sin(6.*ang+t*6.);
+  float d=length(q)/rr;
+  vec2 cp=vec2(cos(t*.19*sp),sin(t*.15*sp))*.32*R;
+  float dc=length(q-cp)/R;
+  vec2 ld=vec2(cos(t*.08*sp+1.),sin(t*.08*sp+1.));
+  float side=dot(normalize(q+1e-4),ld)*.5+.5;
+  vec3 col=mix(cCore,cRing,smoothstep(.05,1.05,dc));
+  float rim=smoothstep(.5,1.,d)*(.15+.85*side*side);
+  col=mix(col,cGlow,rim);
+  vec2 hp=vec2(cos(t*.13*sp+2.),sin(t*.11*sp+2.))*.55*R+vec2(.35*R,0.);
+  float hm=exp(-pow(length(q-hp)/(.6*R),2.))*hintAmt*smoothstep(.35,.95,d);
+  vec3 hl=mix(cHint,vec3(1.),.45);
+  col=mix(col,hl,hm*.6);
+  float e=mix(.03,.45,smoothstep(-.2,1.,sin(t*.23*sp+ang*1.)*.5+.5));
+  float a=1.-smoothstep(1.-e*.35,1.+e,d);
+  float halo=exp(-pow(max(d-.9,0.)/(.55+.3*side),2.))*(.35+.4*side)*(1.-a);
+  vec3 bg=vec3(1.);
+  vec3 o=mix(bg,mix(cGlow,cRing,.35),halo*.7);
+  o=mix(o,col,a);
+  o+= (h(gl_FragCoord.xy+t)-.5)*.018;
+  gl_FragColor=vec4(o,1.);
+}`;
+    const init = () => {
+      const cv = document.getElementById('dmgOrbCanvas');
+      if (!cv) return null;
+      const gl = cv.getContext('webgl', { antialias: false, premultipliedAlpha: false });
+      if (!gl) { cv.style.display = 'none'; return null; }
+      const sh = (ty, src) => { const o = gl.createShader(ty); gl.shaderSource(o, src); gl.compileShader(o); return o; };
+      const pr = gl.createProgram(); gl.attachShader(pr, sh(gl.VERTEX_SHADER, VS)); gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, FS)); gl.linkProgram(pr);
+      if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) { cv.style.display = 'none'; return null; }
+      gl.useProgram(pr);
+      const bf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, bf); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+      const loc = gl.getAttribLocation(pr, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+      const U = {}; ['res', 't', 'cCore', 'cRing', 'cGlow', 'cHint', 'risk', 'hintAmt', 'imp', 'impA', 'ph', 'pull'].forEach((k) => { U[k] = gl.getUniformLocation(pr, k); });
+      return { cv, gl, U };
+    };
+    const hex = (c) => [1, 3, 5].map((i) => parseInt(c.substr(i, 2), 16) / 255);
+    this._cur = null; this._ctx = null;
+    const t0 = performance.now();
+    const loop = () => {
+      this._raf = requestAnimationFrame(loop);
+      if (!this._ctx || !document.body.contains(this._ctx.cv)) { this._ctx = init(); if (!this._ctx) return; }
+      const tg = this._orbT; if (!tg) return;
+      const T = { core: hex(tg.core), ring: hex(tg.ring), glow: hex(tg.glow), hint: hex(tg.hint), risk: tg.risk, hintAmt: tg.hintAmt };
+      if (!this._cur) this._cur = JSON.parse(JSON.stringify(T));
+      const k = 0.05, C = this._cur;
+      ['core', 'ring', 'glow', 'hint'].forEach((key) => { for (let i = 0; i < 3; i++) C[key][i] += (T[key][i] - C[key][i]) * k; });
+      C.risk += (T.risk - C.risk) * k; C.hintAmt += (T.hintAmt - C.hintAmt) * k;
+      const { cv, gl, U } = this._ctx;
+      const sc = Math.min(1, window.devicePixelRatio || 1) * 0.6;
+      const W = Math.max(2, Math.round(cv.clientWidth * sc)), H = Math.max(2, Math.round(cv.clientHeight * sc));
+      if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; }
+      gl.viewport(0, 0, W, H);
+      gl.uniform2f(U.res, W, H); gl.uniform1f(U.t, (performance.now() - t0) / 1000 * 1.35);
+      gl.uniform3fv(U.cCore, C.core); gl.uniform3fv(U.cRing, C.ring); gl.uniform3fv(U.cGlow, C.glow); gl.uniform3fv(U.cHint, C.hint);
+      gl.uniform1f(U.risk, C.risk); gl.uniform1f(U.hintAmt, C.hintAmt);
+      this._imp = (this._imp || 0) * 0.93; this._phC = (this._phC || 0) + (((this._ph || 0)) - (this._phC || 0)) * 0.06;
+      gl.uniform1f(U.imp, this._imp); gl.uniform1f(U.impA, this._impA || 0); gl.uniform1f(U.ph, this._phC);
+      const D = this._drag, tp = D && D.on ? [D.dx, D.dy] : [0, 0]; this._pl = this._pl || [0, 0]; const kk = D && D.on ? 0.3 : 0.14;
+      this._pl[0] += (tp[0] - this._pl[0]) * kk; this._pl[1] += (tp[1] - this._pl[1]) * kk;
+      gl.uniform2f(U.pull, this._pl[0], this._pl[1]);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    };
+    loop();
+  }
+  componentWillUnmount() {
+    if (this._raf) cancelAnimationFrame(this._raf);
+    window.removeEventListener('storage', this._sync);
+    window.removeEventListener('focus', this._sync);
+  }
+  readPhoto() {
+    try { return window.localStorage.getItem('dmg-photo-v2') || ''; } catch (e) { return ''; }
+  }
+  catalog() {
+    return [
+      { id: 'can', page: 'Product-can.dc.html', cat: 'Self-Care', href: 'Wellness.dc.html', name: 'No. 01 Rehydration Formula \u2014 12 Pack', short: 'No. 01 Rehydration Formula', img: 'assets/1fd6a90417709ea661c9d93e1f47e62d.jpg', alt: 'No. 01 Rehydration Formula, white aluminium can', hover: 'assets/c6383f38bac3ae0af2ed79bf9b9dfd78.jpg', hoverAlt: 'No. 01 Rehydration Formula, back of can with nutrition facts', w: { uv: 0.9, air: 0.2, rain: 0 } },
+      { id: 'rain', page: 'Product-rain.dc.html', cat: 'Protective Gear', href: 'Apparel.dc.html', name: 'Technical Rain Jacket', short: 'Technical Rain Jacket', img: 'assets/d86cc1d2c0ffe3f9b2fd836a063f0f6d.jpg', alt: 'Technical Rain Jacket, front view on model', hover: 'assets/6c6cb0e328ca92311d7e666606e3720d.jpg', hoverAlt: 'Technical Rain Jacket, back view on model', w: { uv: 0, air: 0.1, rain: 1 } },
+      { id: 'hazmat', page: 'Product-hazmat.dc.html', cat: 'Protective Gear', href: 'Apparel.dc.html', name: 'Hazmat Suit', short: 'Hazmat Suit', img: 'assets/2f0ba8b8e454ab5f24aa3e0c366c47dc.png', alt: 'Hazmat Suit, front view on model', hover: 'assets/99a3beb5d04b87cfcea729d7b9bc57f4.png', hoverAlt: 'Hazmat Suit, back view on model', w: { uv: 0.2, air: 0.8, rain: 0.6 } },
+      { id: 'fan', page: 'Product-fan.dc.html', cat: 'Protective Gear', href: 'Apparel.dc.html', name: 'Cooling Fan Jacket', short: 'Cooling Fan Jacket', img: 'assets/7aa9652491ac712ac52b349514fe0886.jpg', alt: 'Cooling Fan Jacket, front view on model', hover: 'assets/d63ce7a7341347c4f2d4c2379f6f4732.jpg', hoverAlt: 'Cooling Fan Jacket, back view with printed logo', w: { uv: 0.9, air: 0.1, rain: 0 } },
+      { id: 'vest', page: 'Product-vest.dc.html', cat: 'Protective Gear', href: 'Apparel.dc.html', name: 'Battery Heated Puffer Jacket', short: 'Battery Heated Puffer Jacket', img: 'assets/2f91e4c4f2538401374fa532503c340e.jpg', alt: 'Battery Heated Puffer Jacket, front view on model', hover: 'assets/255995064227e0ed0a583c691867b220.jpg', hoverAlt: 'Battery Heated Puffer Jacket, back view on model', w: { uv: 0, air: 0.2, rain: 0.4 } },
+      { id: 'boot', page: 'Product-boot.dc.html', cat: 'Protective Gear', href: 'Apparel.dc.html', name: 'All-Terrain Boots', short: 'All-Terrain Boots', img: 'assets/154ba0a698e9cb7f8abdaf9f7220cf27.jpg', alt: 'All-Terrain Boots, black, pair front three-quarter view', hover: 'assets/6b8807cd5cbe88f540754fdf308a7bbd.jpg', hoverAlt: 'All-Terrain Boots, black, side view', w: { uv: 0.1, air: 0.1, rain: 0.9 } },
+      { id: 'balm', page: 'Product-balm.dc.html', cat: 'Self-Care', href: 'Wellness.dc.html', name: 'Barrier Balm', short: 'Barrier Balm', img: 'assets/185791f3d855120b583c72895ea65e23.jpg', alt: 'Barrier Balm, round polished silver compact seen from above', hover: 'assets/d1960c7d75f850bf9db5ec8b161c2225.png', hoverAlt: 'Barrier Balm, front three-quarter view with embossed lid', w: { uv: 0.8, air: 0.4, rain: 0.3 } },
+      { id: 'rinse', page: 'Product-rinse.dc.html', cat: 'Self-Care', href: 'Wellness.dc.html', name: 'RINSE/ZERO \u2014 All-in-One Body Wash 400 mL', short: 'RINSE/ZERO', img: 'assets/be21e38702ea75c7a5878e536c4f2555.png', alt: 'RINSE/ZERO all-in-one body wash, frosted translucent bottle with grey label', hover: 'assets/55025e8e1c530932d36b2ee8acc4ae7b.png', hoverAlt: 'RINSE/ZERO, back label with ingredients and barcode', w: { uv: 0.2, air: 0.8, rain: 0.8 } },
+      { id: 'flask', page: 'Product-flask.dc.html', cat: 'Self-Care', href: 'Wellness.dc.html', name: 'Soft Thermal Flask \u2014 500 mL', short: 'Soft Thermal Flask', img: 'assets/dfd30376c0801562ba834291f5fd519d.jpg', alt: 'Soft Thermal Flask, silver soft flask', hover: 'assets/b4b1e59bfdce03c838a5831ed7ee39dd.jpg', hoverAlt: 'Soft Thermal Flask, label side', w: { uv: 0.7, air: 0.1, rain: 0.2 } },
+      { id: 'strip', page: 'Product-strip.dc.html', cat: 'Self-Care', href: 'Wellness.dc.html', name: 'Daily Supplement Strip \u2014 21 Capsules', short: 'Daily Supplement Strip', img: 'assets/1bfd361065ad5a8c1afeeec4406e72d3.jpg', alt: 'Daily Supplement Strip, seven capsules in a silver blister', hover: 'assets/1d55b93438f136db9828e8e4f89ea378.png', hoverAlt: 'Daily Supplement Strip, three strips in an open aluminium tin', w: { uv: 0.4, air: 0.5, rain: 0.3 } },
+      { id: 'perfume', page: 'Product-perfume.dc.html', cat: 'Self-Care', href: 'Wellness.dc.html', name: 'FOREST-01 / AQI 0 \u2014 Eau de Parfum 50 mL', short: 'FOREST-01 / AQI 0', img: 'assets/5e33f31ec654700be91cd3a48200d512.png', alt: 'FOREST-01 / AQI 0 perfume, clear pebble-shaped glass bottle with black cap', hover: 'assets/65e24d0706ac8f1dcb9a473ea8232fbc.png', hoverAlt: 'FOREST-01 / AQI 0 white box packaging, front', w: { uv: 0, air: 0.6, rain: 0.1 } },
+      { id: 'mask', page: 'Product-mask.dc.html', cat: 'Equipment', href: 'Accessories.dc.html', name: 'Gas Mask', short: 'Gas Mask', img: 'assets/044cf0eb50a40a36bf7b382510406339.png', alt: 'Gas Mask, front view on model', hover: 'assets/b978282d49ebb7c90344e23047e49088.jpg', hoverAlt: 'Gas Mask, side profile on model', w: { uv: 0, air: 1, rain: 0.1 } },
+      { id: 'shield', page: 'Product-shield.dc.html', cat: 'Equipment', href: 'Accessories.dc.html', name: 'Solar Shield Sunglass', short: 'Solar Shield Sunglass', img: 'assets/2bc47d4b5e63ee17ab043f0a5726dd5a.jpg', alt: 'Solar Shield Sunglass, front view on model', hover: 'assets/9b6c30711a883acf026551a23e813ca8.jpg', hoverAlt: 'Solar Shield Sunglass, side view on model with embossed temple logo', w: { uv: 1, air: 0.1, rain: 0 } },
+      { id: 'balaclava', page: 'Product-balaclava.dc.html', cat: 'Equipment', href: 'Accessories.dc.html', name: 'Daily Balaclava', short: 'Daily Balaclava', img: 'assets/1932e28de9ce01ca94391f06cc9c6603.jpg', alt: 'Daily Balaclava in black, front view on model', hover: 'assets/cd2adfcb34eccf652ed6cc4c510db33f.jpg', hoverAlt: 'Daily Balaclava in white, front view on model', w: { uv: 0.3, air: 0.9, rain: 0.2 } },
+      { id: 'backpack', page: 'Product-backpack.dc.html', cat: 'Equipment', href: 'Accessories.dc.html', name: 'Survival Backpack', short: 'Survival Backpack', img: 'assets/ba316c46a3308bda6f4ea9df8feebb08.png', alt: 'Survival Backpack, rounded black molded-shell backpack, front view', hover: 'assets/d40cd02eaaf3224e5367d0ead9bf6925.png', hoverAlt: 'Survival Backpack, back view with padded shoulder straps', w: { uv: 0.3, air: 0.4, rain: 0.7 } },
+      { id: 'spacesuit', page: 'Product-spacesuit.dc.html', cat: 'Protective Gear', href: 'Apparel.dc.html', name: 'Space Project 01 Suit', short: 'Space Project 01 Suit', img: 'assets/797035594a1f285858e59c50dc239238.png', alt: 'Space Project 01 Suit, front view on model', hover: 'assets/44e65cb7877e5eb8095b6611c42d780f.jpg', hoverAlt: 'Space Project 01 Suit, back view on model', w: { uv: 0.8, air: 0.8, rain: 0.6 } },
+      { id: 'cargo', page: 'Product-cargo.dc.html', cat: 'Protective Gear', href: 'Apparel.dc.html', name: 'Waist Protect Cargo Pants', short: 'Waist Protect Cargo Pants', img: 'assets/5c4d72d387eb9c1289437e4bc022efc0.jpg', alt: 'Waist Protect Cargo Pants, front view on model', hover: 'assets/fb30454065b70c1c68767acc3d36fa0d.jpg', hoverAlt: 'Waist Protect Cargo Pants, three-quarter view', w: { uv: 0.2, air: 0.3, rain: 0.4 } },
+      { id: 'top', page: 'Product-top.dc.html', cat: 'Protective Gear', href: 'Apparel.dc.html', name: 'Technical Base Layer Top', short: 'Technical Base Layer Top', img: 'assets/93cc1d979a2c3824a15dec47657c5dcf.jpg', alt: 'Technical Base Layer Top, front view on model', hover: 'assets/a685425bc646c9f5a7055fe3af79824c.jpg', hoverAlt: 'Technical Base Layer Top, back view on model', w: { uv: 0.5, air: 0.2, rain: 0.1 } },
+      { id: 'topw', page: 'Product-topw.dc.html', cat: 'Protective Gear', href: 'Apparel.dc.html', name: 'Technical Base Layer Top \u2014 Women\u2019s', short: 'Technical Base Layer Top \u2014 Women\u2019s', img: 'assets/eba5374b093aa30ccf6ecfe2ca7cd64c.jpg', alt: 'Technical Base Layer Top, women\u2019s, front view on model', hover: 'assets/0cfe00fabbc45442193fb8b3add6fd26.jpg', hoverAlt: 'Technical Base Layer Top, women\u2019s, back view on model', w: { uv: 0.5, air: 0.2, rain: 0.1 } }
+    ];
+  }
+  zoneDefs() {
+    return {
+      coastal: { name: 'Coastal Zone', note: 'Acid rain and flooding. Salt in the air.', air: [60, 90], uv: [3, 5], rain: [50, 40] },
+      inland: { name: 'Inland Zone', note: 'Extreme heat and UV. Dry wind.', air: [50, 100], uv: [8, 4], rain: [0, 30] },
+      urban: { name: 'Urban Zone', note: 'Particulate haze. Low visibility.', air: [160, 80], uv: [4, 4], rain: [10, 40] },
+      highland: { name: 'Highland Zone', note: 'Thin air. Sudden temperature shifts.', air: [30, 60], uv: [7, 5], rain: [20, 40] }
+    };
+  }
+  readZone() {
+    try { return window.localStorage.getItem('dmg-zone') || ''; } catch (e) { return (this.state && this.state.zone) || ''; }
+  }
+  writeZone(z) {
+    try { window.localStorage.setItem('dmg-zone', z); } catch (e) {}
+  }
+  conditions(d) {
+    d = d || new Date();
+    const s = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+    let seed = 7;
+    for (let i = 0; i < s.length; i++) seed = (seed * 131 + s.charCodeAt(i)) % 2147483647;
+    const rnd = () => { seed = (seed * 48271) % 2147483647; return seed / 2147483647; };
+    rnd(); rnd(); rnd();
+    const r1 = rnd(), r2 = rnd(), r3 = rnd();
+    const zd = this.zoneDefs()[this.readZone()];
+    const air = zd ? Math.round(zd.air[0] + r1 * zd.air[1]) : Math.round(40 + r1 * 200);
+    const uv = zd ? Math.round(zd.uv[0] + r2 * zd.uv[1]) : Math.round(2 + r2 * 10);
+    const rain = zd ? Math.round((zd.rain[0] + r3 * zd.rain[1]) / 10) * 10 : Math.round(r3 * 9) * 10;
+    const uvLabel = uv >= 11 ? 'Extreme' : uv >= 8 ? 'Very high' : uv >= 6 ? 'High' : uv >= 3 ? 'Moderate' : 'Low';
+    const threat = { uv: uv / 11, air: air / 200, rain: rain / 80 };
+    const worst = Math.max(threat.uv, threat.air, threat.rain);
+    const mins = Math.max(30, Math.round((6 - 4.5 * worst) * 2) * 30);
+    const hours = mins < 60 ? mins + ' min' : (mins / 60) + (mins === 60 ? ' hr' : ' hrs');
+    return { air, uv, rain, uvLabel, threat, hours, mins };
+  }
+  renderVals() {
+    const bag = (this.state && this.state.bag) || 0;
+    const add = () => {};
+    const c = this.conditions();
+    const score = (p) => p.w.uv * c.threat.uv + p.w.air * c.threat.air + p.w.rain * c.threat.rain;
+    const all = this.catalog().map((p) => ({ ...p, score: score(p) })).sort((a, b) => b.score - a.score);
+    const top = all[0];
+    const page = '';
+    const catOrder = ['Equipment', 'Self-Care', 'Protective Gear'];
+    const list = page === 'All'
+      ? all.slice().sort((a, b) => (catOrder.indexOf(a.cat) - catOrder.indexOf(b.cat)) || (b.score - a.score))
+      : all.filter((p) => p.cat === page);
+    const products = list.map((p, i) => ({ ...p, price: '[PRICE]', today: (page === 'All' ? p.id === top.id : i === 0) && p.score > 0.6, add: () => this.addItem(p.id, '') }));
+    const M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    let rid = '0417';
+    try { rid = window.localStorage.getItem('dmg-resident') || ''; if (!rid) { rid = String(1000 + Math.floor(Math.random() * 9000)); window.localStorage.setItem('dmg-resident', rid); } } catch (e) { rid = '0417'; }
+    const week = [];
+    for (let i = 6; i >= 0; i--) { const dt = new Date(Date.now() - i * 86400000); week.push({ ...this.conditions(dt), dt: dt }); }
+    const sum = (fn) => week.reduce((a, x) => a + fn(x), 0);
+    const expMin = sum((x) => x.mins);
+    const pm = Math.round(sum((x) => x.air * 0.62 * x.mins / 60));
+    const sed = sum((x) => x.uv * 0.45 * x.mins / 60).toFixed(1);
+    const rainDays = week.filter((x) => x.rain >= 50).length;
+    const avgThreat = sum((x) => Math.max(x.threat.uv, x.threat.air, x.threat.rain)) / 7;
+    const hyd = Math.max(41, Math.min(96, Math.round(96 - sum((x) => x.uv) / 7 * 3.2 - avgThreat * 6)));
+    const fmtH = (m) => Math.floor(m / 60) + ' hr' + (m % 60 ? ' ' + (m % 60) + ' min' : '');
+    const avgUv = sum((x) => x.uv) / 7, avgAir = sum((x) => x.air) / 7, avgRain = sum((x) => x.rain) / 7;
+    const balm = Math.max(1, Math.round(14 - avgUv)), filt = Math.max(1, Math.round(30 - avgAir / 9)), cans = Math.max(1, Math.round(12 - avgUv * 0.8)), shell = Math.max(5, Math.round(100 - avgRain * 0.6));
+    const zKey = this.readZone(), zDef = this.zoneDefs()[zKey];
+    const rn = parseInt(rid, 10) || 417;
+    const lat = (20 + (rn * 7919 % 4000) / 100).toFixed(4), lon = (100 + (rn * 104729 % 4500) / 100).toFixed(4);
+    const coords = lat + '\u00b0 N, ' + lon + '\u00b0 E';
+    const status = avgThreat > 0.85 ? 'Attention required' : avgThreat > 0.55 ? 'Elevated' : 'Within tolerance';
+    const r = {
+      id: rid,
+      zone: zDef ? zDef.name : 'Zone not set',
+      period: M[week[0].dt.getMonth()] + ' ' + week[0].dt.getDate() + ' \u2013 ' + M[week[6].dt.getMonth()] + ' ' + week[6].dt.getDate() + ', ' + week[6].dt.getFullYear(),
+      status: status,
+      dot: status === 'Within tolerance' ? '#6D7072' : status === 'Elevated' ? '#B5832E' : '#B3412E',
+      metrics: [
+        { label: 'Outdoor exposure', value: fmtH(expMin), unit: '', note: 'Past 7 days' },
+        { label: 'Particulates inhaled', value: pm, unit: '\u00b5g', note: 'PM2.5, estimated' },
+        { label: 'UV dose', value: sed, unit: 'SED', note: 'Standard erythema dose' },
+        { label: 'Acid rain contact', value: rainDays, unit: rainDays === 1 ? 'day' : 'days', note: 'Precipitation pH below 5.0' },
+        { label: 'Hydration index', value: hyd, unit: '%', note: hyd < 70 ? 'Below recommended' : 'Within range' },
+        { label: 'Air today', value: c.air, unit: 'AQI', note: 'UV ' + c.uv + ' \u00b7 Acid rain ' + c.rain + '%' }
+      ],
+      coords: coords,
+      days: week.slice().reverse().map((x) => ({ date: M[x.dt.getMonth()] + ' ' + x.dt.getDate(), hours: x.hours, air: x.air, uv: x.uv + ' ' + x.uvLabel, rain: x.rain }))
+    };
+    const now = new Date();
+    let ws = 11; const ds = now.getFullYear() + '/' + now.getMonth() + '/' + now.getDate();
+    for (let i = 0; i < ds.length; i++) ws = (ws * 131 + ds.charCodeAt(i)) % 2147483647;
+    const wr = () => { ws = (ws * 48271) % 2147483647; return ws / 2147483647; };
+    const temp = Math.round(18 + wr() * 21 + c.threat.uv * 4), hum = Math.round(28 + wr() * 60), wind = Math.round(4 + wr() * 38);
+    const wDirs = ['N','NE','E','SE','S','SW','W','NW'];
+    const hrs = []; const wPhase = wr() * 6.28;
+    for (let i = 0; i < 24; i++) {
+      const hd = new Date(now.getTime() + i * 3600000), hh = hd.getHours();
+      const DC = [-20, -23, -25, -27, -28, -28, -22, -14, -4, 7, 18, 28, 36, 42, 46, 47, 44, 35, 20, 6, -4, -11, -15, -18];
+      const hf = hd.getHours() + hd.getMinutes() / 60, h0 = Math.floor(hf) % 24, h1 = (h0 + 1) % 24;
+      const t = Math.max(-31, Math.min(54, Math.round(DC[h0] + (DC[h1] - DC[h0]) * (hf - Math.floor(hf)) + (wr() - 0.5) * 4)));
+      hrs.push({ t: t, label: i === 0 ? 'Now' : String(hh).padStart(2, '0'), rain: Math.max(0, Math.min(100, Math.round((c.rain + (wr() - 0.5) * 40) / 10) * 10)) });
+    }
+    const TS = [[-31,'#1F2E7A'],[-15,'#2F63C8'],[0,'#7FB6E6'],[12,'#D3DEE3'],[22,'#F3D9A4'],[30,'#F4A640'],[38,'#EC6A2A'],[46,'#C92A2A'],[54,'#6E0E2B']];
+    const hx = (c) => [1, 3, 5].map((k) => parseInt(c.substr(k, 2), 16));
+    const tcol = (t) => { t = Math.max(-31, Math.min(54, t)); let i = 0; while (i < TS.length - 2 && t > TS[i + 1][0]) i++; const a = TS[i], b = TS[i + 1], f = (t - a[0]) / (b[0] - a[0]); const A = hx(a[1]), B = hx(b[1]); return '#' + A.map((v, k) => Math.round(v + (B[k] - v) * f).toString(16).padStart(2, '0')).join(''); };
+    const tBand = (t) => t <= -20 ? ['Extreme cold', 'Frostbite in minutes. Stay indoors; if you must go out, layer heat and cover every inch of skin.', ['vest', 'balaclava', 'flask']]
+      : t <= 0 ? ['Freezing', 'Heated outer layer over a base layer. Cover exposed skin and keep fluids warm.', ['vest', 'top', 'balaclava']]
+      : t <= 15 ? ['Cool', 'A base layer is enough. Keep a warm flask close for the evening drop.', ['top', 'flask', 'backpack']]
+      : t <= 27 ? ['Mild', 'A safe window for outdoor exposure. Normal precautions apply.', []]
+      : t <= 37 ? ['Hot', 'Hydrate every hour. Seek shade and shield your eyes and skin.', ['can', 'shield', 'balm']]
+      : t <= 45 ? ['Extreme heat', 'Active cooling required. Limit time outside to short intervals.', ['fan', 'can', 'shield']]
+      : ['Lethal heat', 'Stay indoors. Heatstroke risk within minutes outside.', ['fan', 'can', 'strip']];
+    hrs.forEach((h, i) => {
+      const hh = new Date(now.getTime() + i * 3600000).getHours();
+      h.uv = Math.max(0, Math.round(c.uv * Math.max(0, Math.sin(Math.PI * (hh - 6) / 13)) + (wr() - 0.5) * 1.5));
+      h.air = Math.max(5, Math.round(c.air * (0.72 + 0.56 * wr())));
+    });
+    const sel = Math.max(0, Math.min(23, (this.state && this.state.sel) || 0));
+    hrs.forEach((h, i) => { h.mark = i === 0 ? 'Now' : i % 6 === 0 ? h.label : ''; h.on = i === sel ? 'true' : 'false'; h.pick = () => { if ((this.state && this.state.sel) !== i) this.setState({ sel: i }); }; });
+    // --- form ---
+    const LV = [
+      { n: 'Good', bg: '#FFFFFF', glow: '#E6F8CC', ring: '#7FE874', core: '#1FC752', ink: '#141516' },
+      { n: 'Mild', bg: '#FFFFFF', glow: '#D2E2FF', ring: '#6E8CFF', core: '#2350F2', ink: '#141516' },
+      { n: 'Caution', bg: '#FFFFFF', glow: '#FFF0C9', ring: '#FFD25E', core: '#FFAE00', ink: '#141516' },
+      { n: 'Poor', bg: '#FFFFFF', glow: '#FFD8B0', ring: '#FF8B4F', core: '#FF4B18', ink: '#141516' },
+      { n: 'Bad', bg: '#FFFFFF', glow: '#F6D2AA', ring: '#F45C93', core: '#E8263E', ink: '#141516' }
+    ];
+    const riskOf = (h) => Math.max(h.t > 22 ? (h.t - 22) / 20 : h.t < 10 ? (10 - h.t) / 36 : 0, h.uv / 16, h.air / 520, h.rain / 200);
+    const lvOf = (r) => LV[r < 0.33 ? 0 : r < 0.5 ? 1 : r < 0.68 ? 2 : r < 0.85 ? 3 : 4];
+    hrs.forEach((h) => { h.risk = Math.min(1, riskOf(h)); h.lv = lvOf(h.risk); h.col = h.lv.core; });
+    let bs = 97 + sel * 13; const br = () => { bs = (bs * 48271) % 2147483647; return bs / 2147483647; };
+    const H = hrs[sel], risk = H.risk, lv = H.lv;
+    const N = 48;
+    const KF = [0, 1, 2, 3].map(() => ({ n: 1.8 + br() * 1.7, ax: 0.8 + br() * 0.4, p2: br() * 6.283, p3: br() * 6.283, a2: (0.03 + 0.09 * br()), a3: (0.02 + 0.07 * br()), rot: (br() - 0.5) * 0.9 }));
+    const amp = 0.6 + 0.9 * risk;
+    const shape = (kf, sc) => {
+      const R = (178 + 22 * risk) * sc, pts = [];
+      for (let k = 0; k < N; k++) {
+        const th = k / N * 6.2832, c = Math.cos(th), sn = Math.sin(th);
+        const se = Math.pow(Math.pow(Math.abs(c), kf.n) + Math.pow(Math.abs(sn), kf.n), -1 / kf.n);
+        const r = R * se * (1 + amp * (kf.a2 * Math.sin(2 * th + kf.p2) + kf.a3 * Math.sin(3 * th + kf.p3)));
+        const x = r * c * kf.ax, y = r * sn / kf.ax, cr = Math.cos(kf.rot), sr = Math.sin(kf.rot);
+        pts.push([x * cr - y * sr, x * sr + y * cr]);
+      }
+      let d = 'M' + pts[0][0].toFixed(1) + ' ' + pts[0][1].toFixed(1);
+      for (let k = 0; k < N; k++) {
+        const p0 = pts[(k - 1 + N) % N], p1 = pts[k], p2 = pts[(k + 1) % N], p3 = pts[(k + 2) % N];
+        d += ' C' + (p1[0] + (p2[0] - p0[0]) / 6).toFixed(1) + ' ' + (p1[1] + (p2[1] - p0[1]) / 6).toFixed(1) + ' ' + (p2[0] - (p3[0] - p1[0]) / 6).toFixed(1) + ' ' + (p2[1] - (p3[1] - p1[1]) / 6).toFixed(1) + ' ' + p2[0].toFixed(1) + ' ' + p2[1].toFixed(1);
+      }
+      return d + ' Z';
+    };
+    const vals = (sc) => { const v = KF.map((kf) => shape(kf, sc)); return { first: v[0], list: v.concat([v[0]]).join(';') }; };
+    const G = vals(1.06), Rm = vals(1), In = vals(0.86);
+    const R = 128 + 18 * risk, dAmp = 14 + 46 * risk;
+    const pt = () => [((br() - 0.5) * 2 * dAmp).toFixed(1), ((br() - 0.5) * 2 * dAmp * 0.7).toFixed(1)];
+    const dr = [pt(), pt(), pt()];
+    const ang = br() * 6.283, hd = R * (0.42 + 0.14 * risk);
+    const hp = [0, 1, 2, 3].map((k) => [(Math.cos(ang + k * 1.5708) * hd).toFixed(1), (Math.sin(ang + k * 1.5708) * hd * 0.8).toFixed(1)]);
+    const orb = {
+      rO: R.toFixed(1), rH: (R * 1.18).toFixed(1),
+      rV: [R, R * (1.04 + 0.05 * risk), R * 0.98, R * (1.03 + 0.04 * risk), R].map((v) => v.toFixed(1)).join(';'),
+      driftV: ['0 0'].concat(dr.map((p) => p[0] + ' ' + p[1]), ['0 0']).join(';'),
+      hx: hp[0][0], hy: hp[0][1], hxV: hp.concat([hp[0]]).map((p) => p[0]).join(';'), hyV: hp.concat([hp[0]]).map((p) => p[1]).join(';'),
+      fxV: ['0.5', (0.5 + (br() - 0.5) * 0.3).toFixed(2), (0.5 + (br() - 0.5) * 0.3).toFixed(2), (0.5 + (br() - 0.5) * 0.3).toFixed(2), '0.5'].join(';'),
+      fyV: ['0.5', (0.5 + (br() - 0.5) * 0.3).toFixed(2), (0.5 + (br() - 0.5) * 0.3).toFixed(2), (0.5 + (br() - 0.5) * 0.3).toFixed(2), '0.5'].join(';'),
+      crispV: ['0.85', (0.1 + 0.4 * br()).toFixed(2), '0.85', (0.05 + 0.25 * br()).toFixed(2), '0.85'].join(';'),
+      reflY: (R * 0.98).toFixed(1), reflRx: (R * 0.75).toFixed(1), reflRy: (R * 0.16).toFixed(1),
+      body0: vals(0.7).first, bodyV: vals(0.7).list, halo0: vals(0.82).first, haloV: vals(0.82).list,
+      haloMove: hp.concat([hp[0]]).map((p) => p[0] + ' ' + p[1]).join(';'),
+      durM: (16 - 7 * risk).toFixed(1) + 's',
+      ...(() => {
+        let nx = null;
+        for (let k = sel + 1; k < Math.min(24, sel + 7); k++) { if (hrs[k].lv.n !== lv.n) { nx = hrs[k]; break; } }
+        const hc = nx ? nx.lv.ring : lv.ring, op = nx ? (0.62 - 0.05 * (hrs.indexOf(nx) - sel)) : 0.25;
+        const ha = br() * 6.283, hr = 34 + 20 * risk;
+        const hm = [0, 1, 2, 3].map((k) => [(78 + Math.cos(ha + k * 1.5708) * hr).toFixed(1), (Math.sin(ha + k * 1.5708) * hr * 0.8).toFixed(1)]);
+        return {
+          hint: hc, hintOp: op.toFixed(2),
+          hintOpV: [op, op * 0.55, op, op * 0.7, op].map((v) => v.toFixed(2)).join(';'),
+          hint0: vals(0.36).first, hintV: vals(0.36).list,
+          hintMove: hm.concat([hm[0]]).map((p) => p[0] + ' ' + p[1]).join(';'),
+          durH: (14 - 5 * risk).toFixed(1) + 's'
+        };
+      })(),
+      durD: (22 - 10 * risk).toFixed(1) + 's', durB: (9 - 3.5 * risk).toFixed(1) + 's', durR: (18 - 8 * risk).toFixed(1) + 's', durC: (13 - 5 * risk).toFixed(1) + 's'
+    };
+    const Ac = vals(0.5), Hl = vals(0.32), Ou = vals(0.62);
+    const drift = (pts) => pts.concat([pts[0]]).map((p) => p[0] + ' ' + p[1]).join(';');
+    const band = tBand(H.t);
+    const PR = { balaclava: 65, shield: 250, mask: 540, rinse: 24, balm: 36, strip: 53, can: 30, flask: 26, perfume: 146, top: 95, topw: 95, cargo: 320, boot: 450, rain: 680, vest: 720, fan: 740, hazmat: 620, spacesuit: 1530, backpack: 200 };
+    const cat = this.catalog(), byId = (id) => cat.find((p) => p.id === id);
+    const hT = { uv: H.uv / 11, air: H.air / 200, rain: H.rain / 80 };
+    const why = { uv: 'For UV ' + H.uv, air: 'For AQI ' + H.air, rain: 'For acid rain ' + H.rain + '%' };
+    const ids = band[2].slice();
+    cat.map((p) => ({ id: p.id, sc: p.w.uv * hT.uv + p.w.air * hT.air + p.w.rain * hT.rain })).sort((a, b) => b.sc - a.sc).forEach((x) => { if (ids.length < 3 && ids.indexOf(x.id) < 0) ids.push(x.id); });
+    const picks = ids.slice(0, 3).map((id, j) => { const p = byId(id); const k = ['uv', 'air', 'rain'].sort((a, b) => p.w[b] * hT[b] - p.w[a] * hT[a])[0]; return { ...p, price: '$' + PR[id].toLocaleString('en-US'), why: j < band[2].length ? 'For ' + H.t + '°C' : why[k], add: () => this.addItem(id, '') }; });
+    const s = {
+      when: (() => { const sd = new Date(now.getTime() + sel * 3600000); const ds = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][sd.getDay()] + ', ' + M[sd.getMonth()] + ' ' + sd.getDate() + ', ' + sd.getFullYear(); return ds + ' · ' + (sel === 0 ? 'Now ' + String(sd.getHours()).padStart(2, '0') + ':00' : String(sd.getHours()).padStart(2, '0') + ':00'); })(),
+      t: H.t, level: lv.n, status: lv.n + ' · ' + band[0], advice: band[1], picks: picks,
+      next: hrs.slice(sel + 1, sel + 5).map((h) => ({ label: h.label + ':00', t: h.t, n: h.lv.n, col: h.col })),
+      nextCol: (hrs[Math.min(23, sel + 1)] || H).col,
+      strip: 'linear-gradient(90deg, ' + hrs.map((h, i) => h.col + ' ' + ((i + 0.5) / 24 * 100).toFixed(1) + '%').join(', ') + ')',
+      mx: ((sel + 0.5) / 24 * 100).toFixed(2),
+      mlabel: sel === 0 ? 'Now' : String(new Date(now.getTime() + sel * 3600000).getHours()).padStart(2, '0') + ':00',
+      mtx: sel < 2 ? 0 : sel > 21 ? -100 : -50,
+      core: lv.core, bg: lv.bg, ink: lv.ink, sel: sel, uv: H.uv, air: H.air, rain: H.rain,
+      line: band[0] + ' \u2014 ' + band[1].split('. ')[0].replace(/\.$/, '') + '.',
+      dur: (10 - 5.5 * risk).toFixed(1) + 's',
+      glow: lv.glow, ring: lv.ring, ...orb,
+      a0: Ac.first, aV: Ac.list, h0: Hl.first, hV: Hl.list, o0: Ou.first, oV: Ou.list,
+      aMove: drift([[70, -60], [10, -95], [95, -10], [40, 40]]),
+      hMove: drift([[-70, 60], [-20, 95], [-95, 10], [-40, -30]]),
+      oMove: drift([[-170, 140], [160, 150], [170, -150], [-160, -140]]),
+      glow0: G.first, glowV: G.list, rim0: Rm.first, rimV: Rm.list, in0: In.first, inV: In.list,
+      stats: (() => {
+        const hh = parseInt(H.label, 10) || now.getHours();
+        const hu = Math.max(8, Math.min(98, Math.round(hum + 22 * Math.cos((hh - 4) / 24 * 6.2832) + (sel % 3 - 1) * 3)));
+        const wd = Math.max(2, Math.round(wind * (0.7 + 0.6 * Math.abs(Math.sin(hh * 0.7 + sel)))));
+        const dir = ['N','NE','E','SE','S','SW','W','NW'][(Math.floor(wind / 5) + Math.floor(sel / 4)) % 8];
+        const vis = Math.max(0.3, 12 - H.air / 30 - H.rain / 20).toFixed(1);
+        const feels = H.t <= 10 ? Math.round(H.t - wd * 0.25) : H.t >= 27 ? Math.round(H.t + hu * 0.08) : H.t;
+        const aq = H.air <= 50 ? 'Good' : H.air <= 100 ? 'Moderate' : H.air <= 150 ? 'Sensitive' : H.air <= 200 ? 'Unhealthy' : H.air <= 300 ? 'Very unhealthy' : 'Hazardous';
+        const uvl = H.uv >= 11 ? 'Extreme' : H.uv >= 8 ? 'Very high' : H.uv >= 6 ? 'High' : H.uv >= 3 ? 'Moderate' : 'Low';
+        const ph = (5.6 - H.rain / 100 * 1.9).toFixed(1);
+        return [
+          { label: 'Feels like', value: feels + '\u00b0' },
+          { label: 'Air quality', value: H.air + ' AQI \u00b7 ' + aq },
+          { label: 'PM2.5', value: Math.round(H.air * 0.42) + ' \u00b5g/m\u00b3' },
+          { label: 'UV index', value: H.uv + ' \u00b7 ' + uvl },
+          { label: 'Acid rain', value: H.rain + '% \u00b7 pH ' + ph },
+          { label: 'Humidity', value: hu + '%' },
+          { label: 'Wind', value: wd + ' km/h ' + dir },
+          { label: 'Visibility', value: vis + ' km' }
+        ];
+      })()
+    };
+    // --- strata ---
+    const X = hrs.map((h, i) => i * 50 + 25), XS = [0].concat(X, [1200]);
+    const ext = (arr) => [arr[0]].concat(arr, [arr[arr.length - 1]]);
+    const L = [ext(hrs.map((h) => 10 + 80 * (h.t + 31) / 85)), ext(hrs.map((h) => 6 + 50 * Math.min(1, h.uv / 11))), ext(hrs.map((h) => 6 + 56 * Math.min(1, h.air / 250))), ext(hrs.map((h) => 6 + 50 * h.rain / 100))];
+    const tot = XS.map((x, i) => L.reduce((a, l) => a + l[i], 0));
+    const base = tot.map((t) => 130 - t / 2);
+    const smooth = (P) => { let d = ''; for (let i = 0; i < P.length - 1; i++) { const p0 = P[i - 1] || P[i], p1 = P[i], p2 = P[i + 1], p3 = P[i + 2] || P[i + 1]; d += ' C' + (p1[0] + (p2[0] - p0[0]) / 6).toFixed(1) + ',' + (p1[1] + (p2[1] - p0[1]) / 6).toFixed(1) + ' ' + (p2[0] - (p3[0] - p1[0]) / 6).toFixed(1) + ',' + (p2[1] - (p3[1] - p1[1]) / 6).toFixed(1) + ' ' + p2[0] + ',' + p2[1].toFixed(1); } return d; };
+    const layers = []; let acc = base.slice();
+    L.forEach((l) => { const top = acc.slice(), bot = acc.map((v, i) => v + l[i]); const T = XS.map((x, i) => [x, top[i]]), B = XS.map((x, i) => [x, bot[i]]).reverse(); layers.push('M0,' + T[0][1].toFixed(1) + smooth(T) + ' L' + B[0][0] + ',' + B[0][1].toFixed(1) + smooth(B) + ' Z'); acc = bot; });
+    const st = { heat: layers[0], uv: layers[1], air: layers[2], rain: layers[3], mx: X[sel], stops: [{ o: 0, c: hrs[0].col }].concat(hrs.map((h, i) => ({ o: (X[i] / 1200).toFixed(3), c: h.col })), [{ o: 1, c: hrs[23].col }]) };
+    const fc = [];
+    for (let i = 1; i <= 7; i++) {
+      const dd = new Date(now.getTime() + i * 86400000), cc = this.conditions(dd);
+      const hi = Math.round(38 + wr() * 14), lo = Math.round(-31 + wr() * 12);
+      const dr = Math.min(1, (hi - 38) / 14 * 0.35 + Math.min(1, cc.air / 300) * 0.45 + cc.rain / 100 * 0.3);
+      fc.push({ day: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][dd.getDay()], uv: cc.uv, air: cc.air, hi: hi, lo: lo, risk: dr });
+    }
+    const gLo = Math.min(...fc.map((d) => d.lo)), gHi = Math.max(...fc.map((d) => d.hi)), gR = Math.max(1, gHi - gLo);
+    fc.forEach((d) => { d.left = Math.round((d.lo - gLo) / gR * 100); d.width = Math.max(4, Math.round((d.hi - d.lo) / gR * 100)); d.cl = '#141516'; d.ch = '#141516'; });
+    fc.forEach((d, j) => {
+      const L2 = lvOf(d.risk); d.n = L2.n; d.core = L2.core; d.mid = L2.mid; d.rim = L2.rim; d.gid = 'dmgDay' + j;
+      let ds = 211 + j * 37; const dr2 = () => { ds = (ds * 48271) % 2147483647; return ds / 2147483647; };
+      const K = [0, 1, 2].map(() => ({ n: 2.1 + dr2() * 1.3, ax: 0.88 + dr2() * 0.24, p2: dr2() * 6.283, p3: dr2() * 6.283, a2: 0.02 + 0.05 * dr2(), a3: 0.015 + 0.04 * dr2(), rot: (dr2() - 0.5) * 0.5 }));
+      const sh = (kf, sc) => shape(kf, sc * 0.5);
+      const V = (sc) => { const v = K.map((kf) => sh(kf, sc)); return [v[0], v.concat([v[0]]).join(';')]; };
+      const g = V(1.06), r = V(1), n = V(0.86);
+      d.g0 = g[0]; d.gV = g[1]; d.r0 = r[0]; d.rV = r[1]; d.i0 = n[0]; d.iV = n[1];
+      d.dur = (9 - 4 * d.risk + j * 0.4).toFixed(1) + 's';
+    });
+    const w = {
+      hours: hrs, days: fc,
+      date: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][now.getDay()] + ', ' + M[now.getMonth()] + ' ' + now.getDate(),
+      items: [
+        { label: 'Temperature', value: hrs[0].t, unit: '\u00b0C' },
+        { label: 'Humidity', value: hum, unit: '%' },
+        { label: 'Wind', value: wind, unit: 'km/h ' + wDirs[Math.floor(wr() * 8)] },
+        { label: 'Air quality', value: c.air, unit: 'AQI' },
+        { label: 'UV index', value: c.uv, unit: c.uvLabel },
+        { label: 'Acid rain', value: c.rain, unit: '%' },
+        { label: 'Outdoor exposure', value: c.hours, unit: 'max' }
+      ]
+    };
+    const photo = (this.state && this.state.photo !== undefined) ? this.state.photo : this.readPhoto();
+    const pickPhoto = (e) => {
+      const f = e && e.target && e.target.files && e.target.files[0];
+      if (!f) return;
+      const rd = new FileReader();
+      rd.onload = () => {
+        const img = new Image();
+        img.onload = () => {
+          const n = 320, cv = document.createElement('canvas'); cv.width = n; cv.height = n;
+          const sc = Math.max(n / img.width, n / img.height), dw = img.width * sc, dh = img.height * sc;
+          cv.getContext('2d').drawImage(img, (n - dw) / 2, (n - dh) / 2, dw, dh);
+          const url = cv.toDataURL('image/jpeg', 0.85);
+          try { window.localStorage.setItem('dmg-photo-v2', url); } catch (err) {}
+          this.setState({ photo: url });
+        };
+        img.src = rd.result;
+      };
+      rd.readAsDataURL(f);
+    };
+    const reasons = { uv: 'For UV exposure', air: 'For particulate air', rain: 'For acid rain' };
+    const replen = all.slice(0, 3).map((p) => { const t = ['uv', 'air', 'rain'].sort((a, b) => p.w[b] * c.threat[b] - p.w[a] * c.threat[a])[0]; return { ...p, reason: reasons[t], add: () => this.addItem(p.id, '') }; });
+    const zone = (this.state && this.state.zone !== undefined) ? this.state.zone : this.readZone();
+    const zdefs = this.zoneDefs();
+    const zones = Object.keys(zdefs).map((k) => ({ name: zdefs[k].name, note: zdefs[k].note, border: k === zone ? '#141516' : '#E4E5E5', pick: () => { this.writeZone(k); this.setState({ zone: k, choosing: false }); } }));
+    this._orbT = { core: s.core, ring: s.ring, glow: s.glow, hint: s.hint || s.ring, risk: risk, hintAmt: parseFloat(s.hintOp) || 0 };
+    return {
+      showZone: !zone || !!(this.state && this.state.choosing),
+      hasZone: !!zone,
+      zoneName: zone ? zdefs[zone].name : '',
+      openZone: () => this.setState({ choosing: true }),
+      zones: zones,
+      r: r,
+      w: w,
+      s: s,
+      dragStart: (e) => { const cv = document.getElementById('dmgOrbCanvas'); const p = e && e.touches && e.touches[0] ? e.touches[0] : e; if (!cv || !p) return; const r = cv.getBoundingClientRect(); const x = p.clientX - (r.left + r.width / 2), y = (r.top + r.height / 2) - p.clientY; if (Math.hypot(x, y) / r.height > 0.3 || (r.bottom - p.clientY) < 34) return; this._drag = { on: true, x0: p.clientX, y0: p.clientY, h: r.height, dx: 0, dy: 0 }; if (e.preventDefault && !e.touches) e.preventDefault(); },
+      dragMove: (e) => { const D = this._drag; if (!D || !D.on) return; const p = e && e.touches && e.touches[0] ? e.touches[0] : e; if (!p) return; let dx = (p.clientX - D.x0) / D.h, dy = (D.y0 - p.clientY) / D.h; const m = Math.hypot(dx, dy), mx = 0.14; dx *= 0.6; dy *= 0.6; if (m > mx) { dx *= mx / m; dy *= mx / m; } D.dx = dx; D.dy = dy; if (e.touches && e.cancelable) e.preventDefault(); },
+      dragEnd: () => { const D = this._drag; if (!D || !D.on) return; D.on = false; const m = Math.hypot(D.dx, D.dy); if (m > 0.01) { this._imp = Math.min(0.7, 0.25 + m * 2.5); this._impA = Math.atan2(-D.dy, -D.dx); this._ph = (this._ph || 0) + 0.6 + Math.random() * 1.2; } },
+      scrub: (e) => { const t = e && e.touches && e.touches[0] ? e.touches[0] : e; const el = e && e.currentTarget; if (!t || !el) return; const r = el.getBoundingClientRect(); const v = Math.max(0, Math.min(23, Math.floor((t.clientX - r.left) / r.width * 24))); if ((this.state && this.state.sel || 0) !== v) this.setState({ sel: v }); },
+      keys: (e) => { const cur = (this.state && this.state.sel) || 0; if (e.key === 'ArrowRight') this.setState({ sel: Math.min(23, cur + 1) }); if (e.key === 'ArrowLeft') this.setState({ sel: Math.max(0, cur - 1) }); },
+      slide: (e) => { const v = parseInt(e && e.target ? e.target.value : 0, 10) || 0; if ((this.state && this.state.sel) !== v) this.setState({ sel: v }); },
+      marks: [0, 6, 12, 18, 23].map((i) => i === 0 ? 'Now' : hrs[i].label + ':00'),
+      st: st,
+      coords: coords,
+      zoneTxt: zDef ? zDef.name : 'Zone not set',
+      photo: photo || '',
+      hasPhoto: !!photo,
+      noPhoto: !photo,
+      pickPhoto: pickPhoto,
+      replen: replen,
+      bag: bag,
+      add: add,
+      c: { zoneLabel: this.coordsLabel() + ' \u2014 ', air: c.air, uv: c.uv, uvLabel: c.uvLabel, rain: c.rain, hours: c.hours, essential: top.short, essentialHref: top.href },
+      products: products
+    };
+  }
+}
+</script>
+</body>
+</html>
